@@ -1,0 +1,2506 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <title>Pesquisa — Gestão Ambiental e Sustentabilidade na Engenharia de Produção</title>
+    <style>
+         :root {
+            --bg: #f4f6fb;
+            --card: #ffffff;
+            --text: #1f2937;
+            --muted: #6b7280;
+            --primary: #059669;
+            --primary-dark: #047857;
+            --primary-light: #ecfdf5;
+            --border: #e5e7eb;
+            --success: #059669;
+            --danger: #dc2626;
+            --radius: 14px;
+            --shadow: 0 1px 3px rgba(16, 24, 40, .06), 0 1px 2px rgba(16, 24, 40, .04);
+        }
+        
+        * {
+            box-sizing: border-box
+        }
+        
+        html {
+            scroll-behavior: smooth
+        }
+        
+        body {
+            margin: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.55;
+            -webkit-font-smoothing: antialiased;
+            font-size: 16px;
+        }
+        
+        .topbar {
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            background: rgba(255, 255, 255, .94);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border);
+        }
+        
+        .topbar-inner {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 12px 20px 8px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+        }
+        
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            min-width: 0
+        }
+        
+        .brand-dot {
+            width: 32px;
+            height: 32px;
+            border-radius: 9px;
+            flex: none;
+            background: linear-gradient(135deg, #059669, #10b981);
+            box-shadow: 0 2px 6px rgba(5, 150, 105, .35);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            /* ajuste o tamanho do ícone aqui */
+            color: #ffffff;
+            /* cor padrão do ícone (caso não use style inline) */
+        }
+        
+        .brand strong {
+            display: block;
+            font-size: 14px;
+            line-height: 1.2;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis
+        }
+        
+        .brand small {
+            display: block;
+            font-size: 11px;
+            color: var(--muted);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis
+        }
+        
+        .step-count {
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--primary);
+            background: var(--primary-light);
+            padding: 5px 11px;
+            border-radius: 999px;
+            white-space: nowrap;
+        }
+        
+        .progress {
+            height: 5px;
+            background: #e8edf5;
+            overflow: hidden
+        }
+        
+        .progress-fill {
+            height: 100%;
+            width: 0;
+            background: linear-gradient(90deg, #059669, #10b981);
+            transition: width .35s cubic-bezier(.4, 0, .2, 1);
+        }
+        
+        .steps-nav {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 8px 20px 10px;
+            display: flex;
+            gap: 4px;
+            overflow-x: auto;
+            scrollbar-width: none;
+        }
+        
+        .steps-nav::-webkit-scrollbar {
+            display: none
+        }
+        
+        .step-dot {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            border: 0;
+            background: transparent;
+            color: var(--muted);
+            font: inherit;
+            font-size: 12px;
+            padding: 4px 9px;
+            border-radius: 999px;
+            cursor: pointer;
+            white-space: nowrap;
+            transition: .15s;
+        }
+        
+        .step-dot span {
+            display: inline-flex;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #e5e7eb;
+            color: #6b7280;
+            align-items: center;
+            justify-content: center;
+            font-size: 11px;
+            font-weight: 700;
+            flex: none;
+            transition: .15s;
+        }
+        
+        .step-dot:hover {
+            background: #f1f5f9
+        }
+        
+        .step-dot.active {
+            color: var(--primary);
+            background: var(--primary-light)
+        }
+        
+        .step-dot.active span {
+            background: var(--primary);
+            color: #fff
+        }
+        
+        .step-dot.done span {
+            background: #a7f3d0;
+            color: #065f46
+        }
+        
+        .step-dot em {
+            font-style: normal
+        }
+        
+        main {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 24px 20px 130px
+        }
+        
+        .card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 28px 30px;
+            box-shadow: var(--shadow);
+        }
+        
+        .step {
+            display: none
+        }
+        
+        .step.active {
+            display: block;
+            animation: fade .32s ease
+        }
+        
+        @keyframes fade {
+            from {
+                opacity: 0;
+                transform: translateY(10px)
+            }
+            to {
+                opacity: 1;
+                transform: none
+            }
+        }
+        
+        .eyebrow {
+            display: inline-block;
+            font-size: 11px;
+            font-weight: 800;
+            letter-spacing: .09em;
+            text-transform: uppercase;
+            color: var(--primary);
+            background: var(--primary-light);
+            padding: 4px 10px;
+            border-radius: 999px;
+            margin-bottom: 12px;
+        }
+        
+        h2 {
+            font-size: 23px;
+            line-height: 1.25;
+            margin: 0 0 10px;
+            letter-spacing: -.02em
+        }
+        
+        h3 {
+            font-size: 16px;
+            margin: 26px 0 8px;
+            letter-spacing: -.01em
+        }
+        
+        p {
+            margin: 0 0 12px
+        }
+        
+        .lead {
+            color: var(--muted);
+            font-size: 15px;
+            margin-bottom: 18px
+        }
+        
+        .texto-bloco {
+            font-size: 15px;
+            color: #374151
+        }
+        
+        .texto-bloco ul {
+            margin: 8px 0 14px;
+            padding-left: 22px
+        }
+        
+        .texto-bloco li {
+            margin-bottom: 5px
+        }
+        
+        .info-box {
+            background: #f8fafc;
+            border: 1px solid var(--border);
+            border-left: 3px solid var(--primary);
+            border-radius: 10px;
+            padding: 16px 18px;
+            margin: 18px 0;
+            font-size: 14px;
+        }
+        
+        .info-box strong {
+            display: block;
+            margin-bottom: 6px;
+            font-size: 14px
+        }
+        
+        .info-box ul {
+            margin: 6px 0 0;
+            padding-left: 20px
+        }
+        
+        .info-box li {
+            margin-bottom: 3px
+        }
+        
+        .campo {
+            margin: 0 0 26px
+        }
+        
+        .campo-label {
+            font-weight: 600;
+            font-size: 15px;
+            margin: 0 0 4px;
+            display: flex;
+            gap: 6px;
+            align-items: baseline;
+        }
+        
+        .req {
+            color: var(--danger);
+            font-weight: 700
+        }
+        
+        .opcoes {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-top: 10px
+        }
+        
+        .op {
+            display: flex;
+            align-items: center;
+            gap: 11px;
+            padding: 11px 15px;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            cursor: pointer;
+            transition: .15s;
+            font-size: 15px;
+            background: #fff;
+        }
+        
+        .op:hover {
+            border-color: #a7f3d0;
+            background: #f6fffa
+        }
+        
+        .op input {
+            accent-color: var(--primary);
+            width: 18px;
+            height: 18px;
+            flex: none;
+            cursor: pointer;
+            margin: 0;
+        }
+        
+        .op:has(input:checked) {
+            border-color: var(--primary);
+            background: var(--primary-light)
+        }
+        
+        .op span {
+            flex: 1
+        }
+        
+        input[type="text"] {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            font: inherit;
+            font-size: 15px;
+            background: #fff;
+            color: var(--text);
+            transition: .15s;
+        }
+        
+        input[type="text"]:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(5, 150, 105, .13);
+        }
+        
+        .outro-wrap {
+            margin-top: 8px
+        }
+        
+        .outro-wrap[hidden] {
+            display: none
+        }
+        /* ===== SEARCH SELECT ===== */
+        
+        .search-select {
+            position: relative;
+            margin-top: 10px
+        }
+        
+        .search-select-input {
+            width: 100%;
+            padding: 12px 42px 12px 15px;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            font: inherit;
+            font-size: 15px;
+            background-color: #fff;
+            color: var(--text);
+            cursor: pointer;
+            transition: .15s;
+            background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%236b7280' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'><polyline points='6 9 12 15 18 9'/></svg>");
+            background-repeat: no-repeat;
+            background-position: right 15px center;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            overflow: hidden;
+        }
+        
+        .search-select-input::placeholder {
+            color: #9ca3af
+        }
+        
+        .search-select-input:hover {
+            border-color: #a7f3d0
+        }
+        
+        .search-select-input:focus,
+        .search-select.open .search-select-input {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(5, 150, 105, .13);
+        }
+        
+        .search-select-dropdown {
+            position: absolute;
+            top: calc(100% + 6px);
+            left: 0;
+            right: 0;
+            background: #fff;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(16, 24, 40, .12);
+            z-index: 100;
+            overflow: hidden;
+            animation: fade .18s ease;
+        }
+        
+        .search-select-dropdown[hidden] {
+            display: none
+        }
+        
+        .search-select-search {
+            width: 100%;
+            padding: 12px 16px;
+            border: 0;
+            border-bottom: 1px solid var(--border);
+            font: inherit;
+            font-size: 14px;
+            outline: none;
+            background: #f6fffa;
+            color: var(--text);
+        }
+        
+        .search-select-search::placeholder {
+            color: #9ca3af
+        }
+        
+        .search-select-list {
+            list-style: none;
+            margin: 0;
+            padding: 6px 0;
+            max-height: 260px;
+            overflow-y: auto;
+            scrollbar-width: thin;
+        }
+        
+        .search-select-list::-webkit-scrollbar {
+            width: 8px
+        }
+        
+        .search-select-list::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 4px
+        }
+        
+        .search-select-list li {
+            padding: 10px 16px;
+            cursor: pointer;
+            font-size: 14px;
+            line-height: 1.35;
+            transition: background .1s;
+            border-left: 3px solid transparent;
+        }
+        
+        .search-select-list li:hover,
+        .search-select-list li.highlighted {
+            background: var(--primary-light);
+            color: var(--primary-dark);
+            border-left-color: var(--primary);
+        }
+        
+        .search-select-list li.selected {
+            background: var(--primary-light);
+            color: var(--primary-dark);
+            font-weight: 600;
+            border-left-color: var(--primary);
+        }
+        
+        .search-select-list li.empty {
+            color: var(--muted);
+            cursor: default;
+            font-style: italic;
+            text-align: center;
+            padding: 16px;
+            border-left-color: transparent;
+        }
+        
+        .search-select-list li.empty:hover {
+            background: transparent;
+            color: var(--muted);
+            border-left-color: transparent;
+        }
+        
+        .campo.invalido .search-select-input {
+            border-color: #fca5a5;
+            background-color: #fffafa;
+        }
+        /* ===== MATRIZ (grade de avaliação) ===== */
+        
+        .matriz {
+            overflow-x: auto;
+            margin-top: 12px;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+        }
+        
+        .matriz table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 14px;
+            min-width: 640px;
+        }
+        
+        .matriz th,
+        .matriz td {
+            padding: 10px 12px;
+            border-bottom: 1px solid #eef2f7;
+            text-align: center;
+            vertical-align: middle;
+        }
+        
+        .matriz th {
+            background: #f6fffa;
+            color: var(--primary-dark);
+            font-weight: 700;
+            font-size: 13px;
+            line-height: 1.25;
+        }
+        
+        .matriz td:first-child,
+        .matriz th:first-child {
+            text-align: left;
+            font-weight: 600;
+            min-width: 180px;
+            color: #374151;
+        }
+        
+        .matriz tbody tr:last-child td {
+            border-bottom: 0
+        }
+        
+        .matriz tbody tr:hover td:not(:first-child) {
+            background: #fafbff
+        }
+        
+        .matriz .cel {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 26px;
+            height: 26px;
+            cursor: pointer;
+        }
+        
+        .matriz .cel input {
+            position: absolute;
+            opacity: 0;
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            cursor: pointer;
+        }
+        
+        .matriz .cel::before {
+            content: '';
+            width: 18px;
+            height: 18px;
+            border: 2px solid #cbd5e1;
+            border-radius: 50%;
+            transition: .15s;
+            background: #fff;
+        }
+        
+        .matriz .cel:has(input:checked)::before {
+            border-color: var(--primary);
+            background: var(--primary);
+            box-shadow: inset 0 0 0 3px #fff;
+        }
+        
+        .matriz .cel:has(input:focus-visible) {
+            outline: 2px solid var(--primary);
+            outline-offset: 2px;
+            border-radius: 4px;
+        }
+        
+        .matriz-aviso {
+            margin-top: 10px;
+            font-size: 12.5px;
+            color: var(--muted);
+        }
+        /* ===== RESTO ===== */
+        
+        .questao {
+            margin: 0 0 30px;
+            border-radius: 12px;
+            transition: .2s
+        }
+        
+        .questao:last-child {
+            margin-bottom: 0
+        }
+        
+        .q-titulo {
+            font-weight: 600;
+            font-size: 15px;
+            margin: 0 0 3px;
+            display: flex;
+            gap: 8px;
+        }
+        
+        .q-num {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 22px;
+            height: 22px;
+            border-radius: 6px;
+            background: var(--primary-light);
+            color: var(--primary);
+            font-size: 12px;
+            font-weight: 800;
+            flex: none;
+            margin-top: 1px;
+        }
+        
+        .q-texto {
+            font-size: 14px;
+            color: var(--muted);
+            margin: 0 0 2px;
+            padding-left: 30px;
+        }
+        
+        .contador {
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--primary);
+            background: var(--primary-light);
+            padding: 4px 11px;
+            border-radius: 999px;
+        }
+        
+        .contador.limite {
+            color: var(--success);
+            background: #ecfdf5
+        }
+        
+        .contador.excedido {
+            color: var(--danger);
+            background: #fef2f2
+        }
+        
+        .erro-banner {
+            background: #fef2f2;
+            border: 1px solid #fecaca;
+            color: #b91c1c;
+            padding: 13px 16px;
+            border-radius: 10px;
+            margin-bottom: 18px;
+            font-size: 14px;
+            font-weight: 600;
+            scroll-margin-top: 160px;
+            display: flex;
+            gap: 9px;
+            align-items: flex-start;
+        }
+        
+        .erro-banner[hidden] {
+            display: none
+        }
+        
+        .questao.invalido {
+            outline: 2px solid #fecaca;
+            outline-offset: 9px
+        }
+        
+        .campo.invalido .opcoes .op {
+            border-color: #fecaca
+        }
+        
+        .campo.invalido input[type="text"] {
+            border-color: #fca5a5;
+            background: #fffafa
+        }
+        
+        .matriz.invalido {
+            outline: 2px solid #fecaca;
+            outline-offset: 4px
+        }
+        
+        .resumo-secao {
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 16px 18px;
+            margin-bottom: 14px;
+            background: #fcfdff;
+        }
+        
+        .resumo-secao h3 {
+            margin: 0 0 12px;
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: .06em;
+            color: var(--primary);
+            font-weight: 800;
+        }
+        
+        .resumo-secao dl {
+            margin: 0
+        }
+        
+        .resumo-item {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
+            padding: 8px 0;
+            border-bottom: 1px dashed #eef2f7;
+            font-size: 14px;
+        }
+        
+        .resumo-item:last-child {
+            border-bottom: 0;
+            padding-bottom: 0
+        }
+        
+        .resumo-item dt {
+            color: var(--muted);
+            font-weight: 500
+        }
+        
+        .resumo-item dd {
+            margin: 0;
+            font-weight: 600;
+            text-align: right;
+            word-break: break-word;
+        }
+        
+        .vazio {
+            color: #9ca3af;
+            font-weight: 400;
+            font-style: italic
+        }
+        
+        .outro-val {
+            color: var(--muted);
+            font-weight: 400
+        }
+        
+        .final {
+            text-align: center;
+            padding: 46px 30px
+        }
+        
+        .final-icon {
+            width: 74px;
+            height: 74px;
+            border-radius: 50%;
+            margin: 0 auto 20px;
+            display: grid;
+            place-items: center;
+            font-size: 36px;
+            color: #fff;
+            background: linear-gradient(135deg, #059669, #10b981);
+            box-shadow: 0 8px 22px rgba(5, 150, 105, .3);
+            animation: pop .45s cubic-bezier(.18, .89, .32, 1.28);
+        }
+        
+        @keyframes pop {
+            from {
+                transform: scale(.4);
+                opacity: 0
+            }
+            to {
+                transform: scale(1);
+                opacity: 1
+            }
+        }
+        
+        .final h2 {
+            margin-bottom: 10px
+        }
+        
+        .final p {
+            color: var(--muted);
+            max-width: 520px;
+            margin: 0 auto 22px
+        }
+        
+        .acoes {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center
+        }
+        
+        .btn {
+            border: 0;
+            border-radius: 10px;
+            padding: 12px 24px;
+            font: inherit;
+            font-weight: 600;
+            font-size: 15px;
+            cursor: pointer;
+            transition: .15s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            justify-content: center;
+        }
+        
+        .btn.primary {
+            background: var(--primary);
+            color: #fff;
+            box-shadow: 0 2px 8px rgba(5, 150, 105, .25);
+        }
+        
+        .btn.primary:hover {
+            background: var(--primary-dark);
+            transform: translateY(-1px)
+        }
+        
+        .btn.primary:active {
+            transform: none
+        }
+        
+        .btn.ghost {
+            background: #fff;
+            color: var(--text);
+            border: 1px solid var(--border)
+        }
+        
+        .btn.ghost:hover {
+            background: #f8fafc;
+            border-color: #cbd5e1
+        }
+        
+        .btn.small {
+            padding: 9px 16px;
+            font-size: 13.5px
+        }
+        
+        .btn:disabled {
+            opacity: .4;
+            cursor: not-allowed;
+            transform: none !important
+        }
+        
+        .btn:focus-visible {
+            outline: 2px solid var(--primary);
+            outline-offset: 2px
+        }
+        
+        .footer-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            z-index: 40;
+            background: rgba(255, 255, 255, .96);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-top: 1px solid var(--border);
+            padding: 12px 20px;
+            display: flex;
+            justify-content: center;
+            padding-bottom: calc(12px + env(safe-area-inset-bottom));
+        }
+        
+        .footer-nav[hidden] {
+            display: none
+        }
+        
+        .footer-nav .inner {
+            width: 100%;
+            max-width: 900px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .footer-hint {
+            font-size: 12.5px;
+            color: var(--muted)
+        }
+        
+        @media (max-width:640px) {
+            body {
+                font-size: 15px
+            }
+            .card {
+                padding: 22px 18px
+            }
+            h2 {
+                font-size: 20px
+            }
+            .brand small {
+                display: none
+            }
+            .step-dot em {
+                display: none
+            }
+            .step-dot {
+                padding: 4px 6px
+            }
+            .resumo-item {
+                grid-template-columns: 1fr;
+                gap: 2px
+            }
+            .resumo-item dd {
+                text-align: left
+            }
+            .footer-hint {
+                display: none
+            }
+            main {
+                padding-bottom: 120px
+            }
+            .search-select-list {
+                max-height: 200px
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header class="topbar">
+        <div class="topbar-inner">
+            <div class="brand">
+                <div class="brand-dot">
+                    <i class="fa-solid fa-seedling" style="color: #ffffff;"></i>
+                </div>
+                <div>
+                    <strong>Gestão Ambiental e Sustentabilidade</strong>
+                    <small>Engenharia de Produção — UEMA</small>
+                </div>
+            </div>
+            <div class="step-count" id="stepCount">Etapa 1 de 8</div>
+        </div>
+        <div class="progress" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="12" id="progressBar">
+            <div class="progress-fill" id="progressFill"></div>
+        </div>
+        <nav class="steps-nav" id="stepsNav" aria-label="Etapas do formulário"></nav>
+    </header>
+
+    <main>
+        <div class="erro-banner" id="erroBanner" role="alert" aria-live="assertive" hidden></div>
+
+        <form id="pesquisa" novalidate>
+
+            <!-- ETAPA 0 — APRESENTAÇÃO -->
+            <section class="step active" id="step-0" data-title="Apresentação">
+                <div class="card">
+                    <span class="eyebrow">Etapa 1 · Apresentação</span>
+                    <h2>A importância da gestão ambiental e sustentabilidade na formação em Engenharia de Produção</h2>
+                    <p class="lead">Trabalho de Conclusão de Curso (TCC) — Universidade Estadual do Maranhão (UEMA)</p>
+
+                    <div class="texto-bloco">
+                        <p>Prezado(a) participante,</p>
+                        <p>Este questionário faz parte do Trabalho de Conclusão de Curso (TCC) intitulado <strong>“A
+                                importância da gestão ambiental e sustentabilidade na formação em Engenharia de
+                                Produção”</strong>, desenvolvido no curso de Engenharia de Produção da Universidade Estadual do Maranhão (UEMA).</p>
+                        <p>A pesquisa tem como objetivo compreender a importância atribuída pelos estudantes de Engenharia de Produção de instituições públicas brasileiras aos conteúdos de gestão ambiental e sustentabilidade, avaliar sua percepção sobre
+                            a abordagem desses conteúdos durante a graduação e identificar os fatores que influenciam a escolha ou a não escolha de temas de TCC relacionados a essa área.</p>
+                    </div>
+
+                    <h3>Forma de coleta</h3>
+                    <p class="texto-bloco">A participação consiste em responder a um questionário on-line, com perguntas objetivas e alternativas de resposta.</p>
+                    <ul class="texto-bloco">
+                        <li>O tempo estimado de preenchimento é de <strong>5 a 8 minutos</strong>.</li>
+                        <li>O formulário <strong>não solicita nome, e-mail ou outros identificadores pessoais</strong>.
+                        </li>
+                        <li>Suas respostas ficam salvas automaticamente neste navegador enquanto você preenche.</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- ETAPA 1 — TCLE -->
+            <section class="step" id="step-1" data-title="Consentimento">
+                <div class="card">
+                    <span class="eyebrow">Etapa 2 · Consentimento</span>
+                    <h2>Termo de Consentimento Livre e Esclarecido (TCLE)</h2>
+
+                    <div class="texto-bloco">
+                        <p>Você está sendo convidado(a) a participar <strong>voluntariamente</strong> desta pesquisa acadêmica.
+                        </p>
+                        <p>Sua participação é voluntária. Você poderá optar por não participar ou interromper o preenchimento antes do envio, sem qualquer penalidade ou prejuízo acadêmico.</p>
+                        <p>Os possíveis riscos são mínimos e podem envolver algum desconforto ao responder perguntas sobre sua formação acadêmica ou suas escolhas relacionadas ao TCC. Não há garantia de benefício individual direto, mas os resultados poderão
+                            contribuir para a compreensão da importância atribuída à gestão ambiental e sustentabilidade nos cursos de Engenharia de Produção.
+                        </p>
+                        <p>As respostas serão utilizadas para <strong>fins acadêmicos e científicos</strong>, conforme as condições de consentimento e os procedimentos de proteção de dados adotados na pesquisa. Os resultados poderão ser apresentados de forma
+                            agrupada, sem identificação individual dos participantes.
+                        </p>
+                        <p>Para preservar o anonimato, o formulário está configurado para não solicitar nome, e-mail ou outros identificadores pessoais.</p>
+                        <p>Os dados serão armazenados e utilizados conforme o plano de pesquisa e as orientações institucionais aplicáveis. Em caso de dúvidas sobre a pesquisa, você poderá entrar em contato com a pesquisadora responsável pelos meios informados
+                            ao final deste termo.</p>
+                    </div>
+
+                    <div class="info-box">
+                        <strong>Informações da pesquisa</strong>
+                        <ul>
+                            <li><strong>Pesquisadora:</strong> Jhulia Emylia Dourado dos Santos</li>
+                            <li><strong>Instituição:</strong> Universidade Estadual do Maranhão (UEMA)</li>
+                            <li><strong>Curso:</strong> Engenharia de Produção</li>
+                            <li><strong>E-mail:</strong> jhulia.20220001325@aluno.uema.br</li>
+                            <li><strong>Orientador(a):</strong> Profa. Dra. Rossane Cardoso Carvalho</li>
+                        </ul>
+                    </div>
+
+                    <div class="campo" id="campo-consentimento">
+                        <p class="campo-label">Você concorda em participar desta pesquisa? <span class="req">*</span>
+                        </p>
+                        <div class="opcoes">
+                            <label class="op">
+                                <input type="radio" name="consentimento"
+                                    value="Sim, li as informações e concordo voluntariamente em participar.">
+                                <span>Sim, li as informações e concordo voluntariamente em participar.</span>
+                            </label>
+                            <label class="op">
+                                <input type="radio" name="consentimento" value="Não concordo em participar.">
+                                <span>Não concordo em participar.</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ETAPA 2 — PERFIL DO PARTICIPANTE -->
+            <section class="step" id="step-2" data-title="Perfil">
+                <div class="card">
+                    <span class="eyebrow">Etapa 3 · Perfil do participante</span>
+                    <h2>Perfil do participante</h2>
+                    <p class="lead">Informações para caracterização do grupo participante. Nenhum dado permite identificação individual.</p>
+
+                    <div class="campo" id="campo-idade">
+                        <p class="campo-label">2. Qual é a sua idade? <span class="req">*</span></p>
+                        <div class="opcoes">
+                            <label class="op"><input type="radio" name="idade" value="Até 19 anos"><span>Até 19
+                                    anos</span></label>
+                            <label class="op"><input type="radio" name="idade" value="De 20 a 24 anos"><span>De 20 a 24
+                                    anos</span></label>
+                            <label class="op"><input type="radio" name="idade" value="De 25 a 29 anos"><span>De 25 a 29
+                                    anos</span></label>
+                            <label class="op"><input type="radio" name="idade" value="De 30 a 34 anos"><span>De 30 a 34
+                                    anos</span></label>
+                            <label class="op"><input type="radio" name="idade" value="35 anos ou mais"><span>35 anos ou
+                                    mais</span></label>
+                        </div>
+                    </div>
+
+                    <div class="campo" id="campo-sexo">
+                        <p class="campo-label">3. Qual é o seu sexo? <span class="req">*</span></p>
+                        <div class="opcoes">
+                            <label class="op"><input type="radio" name="sexo"
+                                    value="Feminino"><span>Feminino</span></label>
+                            <label class="op"><input type="radio" name="sexo"
+                                    value="Masculino"><span>Masculino</span></label>
+                            <label class="op"><input type="radio" name="sexo" value="Prefiro não informar"><span>Prefiro
+                                    não informar</span></label>
+                        </div>
+                    </div>
+
+                    <div class="campo" id="campo-periodo">
+                        <p class="campo-label">4. Em qual período do curso de Engenharia de Produção você está matriculado(a)? <span class="req">*</span></p>
+                        <div class="opcoes">
+                            <label class="op"><input type="radio" name="periodo" value="5º período / semestre"><span>5º
+                                    período / semestre</span></label>
+                            <label class="op"><input type="radio" name="periodo" value="6º período / semestre"><span>6º
+                                    período / semestre</span></label>
+                            <label class="op"><input type="radio" name="periodo" value="7º período / semestre"><span>7º
+                                    período / semestre</span></label>
+                            <label class="op"><input type="radio" name="periodo" value="8º período / semestre"><span>8º
+                                    período / semestre</span></label>
+                            <label class="op"><input type="radio" name="periodo" value="9º período / semestre"><span>9º
+                                    período / semestre</span></label>
+                            <label class="op"><input type="radio" name="periodo"
+                                    value="10º período ou superior"><span>10º período ou superior</span></label>
+                        </div>
+                    </div>
+
+                    <div class="campo" id="campo-estado">
+                        <p class="campo-label">5. Em qual estado brasileiro está localizada sua instituição de ensino?
+                            <span class="req">*</span>
+                        </p>
+                        <div class="search-select" id="estado-search-select" data-placeholder="Digite para buscar seu estado...">
+                            <input type="text" class="search-select-input" placeholder="Digite para buscar seu estado..." autocomplete="off" readonly>
+                            <input type="hidden" name="estado" value="">
+                            <div class="search-select-dropdown" hidden>
+                                <input type="text" class="search-select-search" placeholder="Buscar estado..." autocomplete="off">
+                                <ul class="search-select-list" role="listbox"></ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--
+                    <div class="campo" id="campo-tipoIES">
+                        <p class="campo-label">6. Qual é o tipo da sua Instituição de Ensino Superior? <span class="req">*</span></p>
+                        <div class="opcoes">
+                            <label class="op"><input type="radio" name="tipoIES" value="Federal"><span>Federal</span></label>
+                            <label class="op"><input type="radio" name="tipoIES" value="Estadual"><span>Estadual</span></label>
+                            <label class="op"><input type="radio" name="tipoIES" value="Outra instituição pública"><span>Outra instituição pública</span></label>
+                        </div>
+                    </div>
+                    -->
+
+                    <div class="campo" id="campo-ies">
+                        <p class="campo-label">6. Em qual Instituição de Ensino Superior (IES) você está matriculado(a)?
+                            <span class="req">*</span>
+                        </p>
+                        <p class="footer-hint" style="margin:0 0 4px">Digite a sigla ou o nome para buscar.</p>
+                        <div class="search-select" id="ies-search-select" data-placeholder="Digite a sigla ou o nome da IES...">
+                            <input type="text" class="search-select-input" placeholder="Digite a sigla ou o nome da IES..." autocomplete="off" readonly>
+                            <input type="hidden" name="ies" value="">
+                            <div class="search-select-dropdown" hidden>
+                                <input type="text" class="search-select-search" placeholder="Buscar instituição..." autocomplete="off">
+                                <ul class="search-select-list" role="listbox"></ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ETAPA 3 — AVALIAÇÃO DO ENSINO -->
+            <section class="step" id="step-3" data-title="Avaliação">
+                <div class="card">
+                    <span class="eyebrow">Etapa 4 · Avaliação do ensino</span>
+                    <h2>Gestão ambiental e sustentabilidade na Engenharia de Produção</h2>
+                    <p class="lead">Avalie os aspectos abaixo e responda às questões seguintes.</p>
+
+                    <div class="questao" id="campo-matriz">
+                        <p class="q-titulo"><span class="q-num">7</span>Com relação à oferta de disciplinas de gestão ambiental e sustentabilidade no curso, como você avalia os seguintes aspectos?</p>
+                        <p class="q-texto">Utilize uma resposta para cada linha.</p>
+
+                        <div class="matriz" id="matrizAvaliacao">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Aspecto avaliado</th>
+                                        <th>Muito inadequada</th>
+                                        <th>Inadequada</th>
+                                        <th>Adequada</th>
+                                        <th>Muito adequada</th>
+                                        <th>Não sei avaliar</th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                        <p class="matriz-aviso">Responda a todas as linhas da matriz para prosseguir.</p>
+                    </div>
+
+                    <div class="questao" id="campo-suficiente">
+                        <p class="q-titulo"><span class="q-num">8</span>Na sua percepção, a formação oferecida pelo curso em gestão ambiental e sustentabilidade é suficiente para preparar você para os desafios dessas áreas no mercado de trabalho?</p>
+                        <div class="opcoes">
+                            <label class="op"><input type="radio" name="suficiente" value="Sim, totalmente"><span>Sim,
+                                    totalmente</span></label>
+                            <label class="op"><input type="radio" name="suficiente" value="Sim, parcialmente"><span>Sim,
+                                    parcialmente</span></label>
+                            <label class="op"><input type="radio" name="suficiente" value="Não"><span>Não</span></label>
+                            <label class="op"><input type="radio" name="suficiente"
+                                    value="Não tenho conhecimento suficiente para avaliar"><span>Não tenho conhecimento
+                                    suficiente para avaliar</span></label>
+                        </div>
+                    </div>
+
+                    <div class="questao" id="campo-avaliacaoEnsino">
+                        <p class="q-titulo"><span class="q-num">9</span>Como você avalia o ensino de gestão ambiental e sustentabilidade recebido durante sua graduação?</p>
+                        <div class="opcoes">
+                            <label class="op"><input type="radio" name="avaliacaoEnsino"
+                                    value="Excelente"><span>Excelente</span></label>
+                            <label class="op"><input type="radio" name="avaliacaoEnsino"
+                                    value="Bom"><span>Bom</span></label>
+                            <label class="op"><input type="radio" name="avaliacaoEnsino"
+                                    value="Regular"><span>Regular</span></label>
+                            <label class="op"><input type="radio" name="avaliacaoEnsino"
+                                    value="Ruim"><span>Ruim</span></label>
+                            <label class="op"><input type="radio" name="avaliacaoEnsino"
+                                    value="Péssimo"><span>Péssimo</span></label>
+                            <label class="op"><input type="radio" name="avaliacaoEnsino"
+                                    value="Não tive contato com esses conteúdos durante a graduação"><span>Não tive
+                                    contato com esses conteúdos durante a graduação</span></label>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ETAPA 4 — IMPORTÂNCIA ATRIBUÍDA -->
+            <section class="step" id="step-4" data-title="Importância">
+                <div class="card">
+                    <span class="eyebrow">Etapa 5 · Importância atribuída</span>
+                    <h2>Importância dos conteúdos</h2>
+                    <p class="lead">Responda com sinceridade, considerando sua experiência na graduação.</p>
+
+                    <div class="questao" id="campo-importancia">
+                        <p class="q-titulo"><span class="q-num">10</span>Qual é a importância que você atribui aos conteúdos de gestão ambiental e sustentabilidade para a formação profissional do engenheiro de produção?</p>
+                        <div class="opcoes">
+                            <label class="op"><input type="radio" name="importancia" value="Nada importante"><span>Nada
+                                    importante</span></label>
+                            <label class="op"><input type="radio" name="importancia"
+                                    value="Pouco importante"><span>Pouco importante</span></label>
+                            <label class="op"><input type="radio" name="importancia"
+                                    value="Moderadamente importante"><span>Moderadamente importante</span></label>
+                            <label class="op"><input type="radio" name="importancia"
+                                    value="Muito importante"><span>Muito importante</span></label>
+                            <label class="op"><input type="radio" name="importancia"
+                                    value="Extremamente importante"><span>Extremamente importante</span></label>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ETAPA 5 — SITUAÇÃO DO TCC -->
+            <section class="step" id="step-5" data-title="TCC">
+                <div class="card">
+                    <span class="eyebrow">Etapa 6 · Escolha do tema de TCC</span>
+                    <h2>Situação em relação ao TCC</h2>
+                    <p class="lead">Estas perguntas ajudam a entender o processo de escolha do tema de TCC.</p>
+
+                    <div class="questao" id="campo-situacaoTCC">
+                        <p class="q-titulo"><span class="q-num">11</span>Em que situação você se encontra em relação ao Trabalho de Conclusão de Curso (TCC)?</p>
+                        <div class="opcoes">
+                            <label class="op"><input type="radio" name="situacaoTCC" value="Já defini meu tema"><span>Já
+                                    defini meu tema</span></label>
+                            <label class="op"><input type="radio" name="situacaoTCC"
+                                    value="Estou pesquisando possibilidades, mas ainda não defini o tema"><span>Estou
+                                    pesquisando possibilidades, mas ainda não defini o tema</span></label>
+                            <label class="op"><input type="radio" name="situacaoTCC"
+                                    value="Ainda não comecei a escolher o tema"><span>Ainda não comecei a escolher o
+                                    tema</span></label>
+                        </div>
+                    </div>
+
+                    <div class="questao" id="campo-pretendeTCC">
+                        <p class="q-titulo"><span class="q-num">12</span>Você pretende desenvolver seu TCC sobre gestão ambiental ou sustentabilidade?</p>
+                        <div class="opcoes">
+                            <label class="op"><input type="radio" name="pretendeTCC"
+                                    value="Sim, meu TCC é dessa área"><span>Sim, meu TCC é dessa área</span></label>
+                            <label class="op"><input type="radio" name="pretendeTCC"
+                                    value="Sim, pretendo escolher um tema dessa área"><span>Sim, pretendo escolher um
+                                    tema dessa área</span></label>
+                            <label class="op"><input type="radio" name="pretendeTCC"
+                                    value="Não"><span>Não</span></label>
+                            <label class="op"><input type="radio" name="pretendeTCC"
+                                    value="Ainda estou indeciso(a)"><span>Ainda estou indeciso(a)</span></label>
+                        </div>
+                    </div>
+
+                    <div class="questao" id="campo-fatorPrincipal">
+                        <p class="q-titulo"><span class="q-num">13</span>Qual foi (ou qual seria) o principal fator para a escolha do tema do seu TCC?</p>
+                        <div class="opcoes">
+                            <label class="op"><input type="radio" name="fatorPrincipal"
+                                    value="Interesse ou afinidade pessoal com o assunto"><span>Interesse ou afinidade
+                                    pessoal com o assunto</span></label>
+                            <label class="op"><input type="radio" name="fatorPrincipal"
+                                    value="Conhecimentos adquiridos nas disciplinas do curso"><span>Conhecimentos
+                                    adquiridos nas disciplinas do curso</span></label>
+                            <label class="op"><input type="radio" name="fatorPrincipal"
+                                    value="Incentivo ou influência de um professor"><span>Incentivo ou influência de um
+                                    professor</span></label>
+                            <label class="op"><input type="radio" name="fatorPrincipal"
+                                    value="Disponibilidade de orientador na área"><span>Disponibilidade de orientador na
+                                    área</span></label>
+                            <label class="op"><input type="radio" name="fatorPrincipal"
+                                    value="Oportunidades no mercado de trabalho"><span>Oportunidades no mercado de
+                                    trabalho</span></label>
+                            <label class="op"><input type="radio" name="fatorPrincipal"
+                                    value="Facilidade de acesso a dados e desenvolvimento da pesquisa"><span>Facilidade
+                                    de acesso a dados e desenvolvimento da pesquisa</span></label>
+                            <label class="op"><input type="radio" name="fatorPrincipal"
+                                    value="Experiência em estágio, pesquisa ou projeto acadêmico"><span>Experiência em
+                                    estágio, pesquisa ou projeto acadêmico</span></label>
+                            <label class="op"><input type="radio" name="fatorPrincipal"
+                                    value="Sugestão de colegas ou profissionais"><span>Sugestão de colegas ou
+                                    profissionais</span></label>
+                            <label class="op"><input type="radio" name="fatorPrincipal" value="Outro fator"><span>Outro
+                                    fator</span></label>
+                        </div>
+                        <div class="outro-wrap" id="outro-fatorPrincipal" hidden>
+                            <input type="text" name="fatorPrincipal_outro" placeholder="Especifique o outro fator">
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ETAPA 6 — FATORES E INFLUÊNCIAS -->
+            <section class="step" id="step-6" data-title="Fatores">
+                <div class="card">
+                    <span class="eyebrow">Etapa 7 · Fatores e influências</span>
+                    <h2>Fatores que influenciam a escolha do tema</h2>
+
+                    <div class="campo" id="campo-fatoresTCC">
+                        <p class="campo-label" style="justify-content:space-between;align-items:center">
+                            <span>14. Se você escolheu (ou pretende escolher) um tema de TCC relacionado à gestão
+                                ambiental ou sustentabilidade, quais fatores mais contribuíram para essa decisão? <span
+                                    class="req">*</span></span>
+                            <span class="contador" id="contadorFatoresTCC">0/3</span>
+                        </p>
+                        <p class="footer-hint" style="margin:0 0 4px">Marque até três alternativas.</p>
+                        <div class="opcoes">
+                            <label class="op"><input type="checkbox" name="fatoresTCC"
+                                    value="Interesse pessoal pela área"><span>Interesse pessoal pela área</span></label>
+                            <label class="op"><input type="checkbox" name="fatoresTCC"
+                                    value="Preocupação com problemas ambientais e sociais"><span>Preocupação com
+                                    problemas ambientais e sociais</span></label>
+                            <label class="op"><input type="checkbox" name="fatoresTCC"
+                                    value="Identificação com os conteúdos estudados na graduação"><span>Identificação
+                                    com os conteúdos estudados na graduação</span></label>
+                            <label class="op"><input type="checkbox" name="fatoresTCC"
+                                    value="Incentivo de professores"><span>Incentivo de professores</span></label>
+                            <label class="op"><input type="checkbox" name="fatoresTCC"
+                                    value="Disponibilidade de orientação acadêmica"><span>Disponibilidade de orientação
+                                    acadêmica</span></label>
+                            <label class="op"><input type="checkbox" name="fatoresTCC"
+                                    value="Aplicação prática do tema nas empresas"><span>Aplicação prática do tema nas
+                                    empresas</span></label>
+                            <label class="op"><input type="checkbox" name="fatoresTCC"
+                                    value="Oportunidades profissionais na área"><span>Oportunidades profissionais na
+                                    área</span></label>
+                            <label class="op"><input type="checkbox" name="fatoresTCC"
+                                    value="Participação em projetos, pesquisas ou estágios relacionados"><span>Participação
+                                    em projetos, pesquisas ou estágios relacionados</span></label>
+                            <label class="op"><input type="checkbox" name="fatoresTCC" value="Outro fator"><span>Outro
+                                    fator</span></label>
+                            <label class="op"><input type="checkbox" name="fatoresTCC" value="Não se aplica"><span>Não
+                                    se aplica</span></label>
+                        </div>
+                        <div class="outro-wrap" id="outro-fatoresTCC" hidden>
+                            <input type="text" name="fatoresTCC_outro" placeholder="Especifique o outro fator">
+                        </div>
+                    </div>
+
+                    <div class="questao" id="campo-motivoNaoTCC">
+                        <p class="q-titulo"><span class="q-num">15</span>Se você não escolheu ou não pretende escolher um tema de TCC relacionado à gestão ambiental ou sustentabilidade, qual é o principal motivo?
+                        </p>
+                        <div class="opcoes">
+                            <label class="op"><input type="radio" name="motivoNaoTCC"
+                                    value="Tenho maior interesse em outra área da Engenharia de Produção"><span>Tenho
+                                    maior interesse em outra área da Engenharia de Produção</span></label>
+                            <label class="op"><input type="radio" name="motivoNaoTCC"
+                                    value="Tive pouco contato com gestão ambiental e sustentabilidade durante o curso"><span>Tive
+                                    pouco contato com gestão ambiental e sustentabilidade durante o curso</span></label>
+                            <label class="op"><input type="radio" name="motivoNaoTCC"
+                                    value="Não me identifico com essa área"><span>Não me identifico com essa
+                                    área</span></label>
+                            <label class="op"><input type="radio" name="motivoNaoTCC"
+                                    value="Não encontrei (ou sei que não vou encontrar) orientador disponível"><span>Não
+                                    encontrei (ou sei que não vou encontrar) orientador disponível</span></label>
+                            <label class="op"><input type="radio" name="motivoNaoTCC"
+                                    value="Considero difícil desenvolver uma pesquisa nessa área"><span>Considero
+                                    difícil desenvolver uma pesquisa nessa área</span></label>
+                            <label class="op"><input type="radio" name="motivoNaoTCC"
+                                    value="Não percebo relação suficiente entre essa área e meus objetivos profissionais"><span>Não
+                                    percebo relação suficiente entre essa área e meus objetivos
+                                    profissionais</span></label>
+                            <label class="op"><input type="radio" name="motivoNaoTCC"
+                                    value="Ainda não defini meu tema de TCC"><span>Ainda não defini meu tema de
+                                    TCC</span></label>
+                            <label class="op"><input type="radio" name="motivoNaoTCC" value="Outro motivo"><span>Outro
+                                    motivo</span></label>
+                            <label class="op"><input type="radio" name="motivoNaoTCC"
+                                    value="Não se aplica: escolhi ou pretendo escolher um tema dessa área"><span>Não se
+                                    aplica: escolhi ou pretendo escolher um tema dessa área</span></label>
+                        </div>
+                        <div class="outro-wrap" id="outro-motivoNaoTCC" hidden>
+                            <input type="text" name="motivoNaoTCC_outro" placeholder="Especifique o outro motivo">
+                        </div>
+                    </div>
+
+                    <div class="questao" id="campo-influenciaContato">
+                        <p class="q-titulo"><span class="q-num">16</span>O contato com disciplinas, professores, projetos ou atividades de gestão ambiental e/ou sustentabilidade durante a graduação influenciou seu interesse em pesquisar essa área no TCC?</p>
+                        <div class="opcoes">
+                            <label class="op"><input type="radio" name="influenciaContato"
+                                    value="Aumentou muito meu interesse"><span>Aumentou muito meu
+                                    interesse</span></label>
+                            <label class="op"><input type="radio" name="influenciaContato"
+                                    value="Aumentou um pouco meu interesse"><span>Aumentou um pouco meu
+                                    interesse</span></label>
+                            <label class="op"><input type="radio" name="influenciaContato"
+                                    value="Não influenciou meu interesse"><span>Não influenciou meu
+                                    interesse</span></label>
+                            <label class="op"><input type="radio" name="influenciaContato"
+                                    value="Diminuiu meu interesse"><span>Diminuiu meu interesse</span></label>
+                            <label class="op"><input type="radio" name="influenciaContato"
+                                    value="Não tive contato suficiente para avaliar"><span>Não tive contato suficiente
+                                    para avaliar</span></label>
+                        </div>
+                    </div>
+
+                    <div class="questao" id="campo-maisAtividades">
+                        <p class="q-titulo"><span class="q-num">17</span>Se houvesse maior oferta de atividades práticas, projetos de pesquisa e oportunidades de orientação em gestão ambiental e sustentabilidade, você:</p>
+                        <div class="opcoes">
+                            <label class="op"><input type="radio" name="maisAtividades"
+                                    value="Teria mais interesse em desenvolver meu TCC nessa área"><span>Teria mais
+                                    interesse em desenvolver meu TCC nessa área</span></label>
+                            <label class="op"><input type="radio" name="maisAtividades"
+                                    value="Talvez tivesse mais interesse"><span>Talvez tivesse mais
+                                    interesse</span></label>
+                            <label class="op"><input type="radio" name="maisAtividades"
+                                    value="Meu interesse não mudaria"><span>Meu interesse não mudaria</span></label>
+                            <label class="op"><input type="radio" name="maisAtividades"
+                                    value="Não tenho interesse nessa área"><span>Não tenho interesse nessa
+                                    área</span></label>
+                            <label class="op"><input type="radio" name="maisAtividades"
+                                    value="Não sei avaliar"><span>Não sei avaliar</span></label>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ETAPA 7 — REVISÃO -->
+            <section class="step" id="step-7" data-title="Revisão">
+                <div class="card">
+                    <span class="eyebrow">Etapa 8 · Revisão</span>
+                    <h2>Revisão das suas respostas</h2>
+                    <p class="lead">Confira abaixo o resumo das suas respostas. Se necessário, use o botão
+                        <strong>Voltar</strong> para corrigir alguma informação antes de enviar.
+                    </p>
+
+                    <div id="resumo"></div>
+
+                    <div class="acoes" style="margin-top:22px;justify-content:flex-start">
+                        <button type="button" class="btn ghost small" id="btnBaixarRascunho">⬇ Baixar respostas
+                            (JSON)</button>
+                        <button type="button" class="btn ghost small" id="btnCopiarRascunho">⧉ Copiar respostas</button>
+                        <button type="button" class="btn ghost small" id="btnLimparRascunho">🗑 Limpar rascunho
+                            salvo</button>
+                    </div>
+
+                    <p class="footer-hint" style="margin-top:18px">Ao clicar em <strong>Enviar respostas</strong>, você confirma que leu o TCLE e que suas respostas podem ser utilizadas para fins acadêmicos e científicos.
+                    </p>
+                </div>
+            </section>
+
+        </form>
+
+        <div class="card final" id="telaEncerramento" hidden>
+            <div class="final-icon" style="background:linear-gradient(135deg,#64748b,#94a3b8);box-shadow:none">i</div>
+            <h2 id="encTitulo">Formulário encerrado</h2>
+            <p id="encMensagem"></p>
+            <div class="acoes">
+                <button type="button" class="btn primary" id="btnReiniciarEnc">Responder novamente</button>
+            </div>
+        </div>
+
+        <div class="card final" id="telaFinal" hidden>
+            <div class="final-icon">✓</div>
+            <h2>Respostas registradas com sucesso!</h2>
+            <p>Agradecemos sua participação! Suas respostas contribuirão para compreender como os conteúdos de gestão ambiental e sustentabilidade são percebidos pelos estudantes de Engenharia de Produção e quais fatores influenciam suas escolhas acadêmicas.</p>
+            <div class="acoes">
+                <button type="button" class="btn primary" id="btnBaixar">⬇ Baixar respostas (JSON)</button>
+                <button type="button" class="btn ghost" id="btnCopiar">⧉ Copiar respostas</button>
+                <button type="button" class="btn ghost" id="btnNova">Responder novamente</button>
+            </div>
+            <p class="footer-hint" style="margin-top:20px">Muito obrigado(a) pela participação!</p>
+        </div>
+    </main>
+
+    <nav class="footer-nav" id="footerNav">
+        <div class="inner">
+            <button type="button" class="btn ghost" id="btnVoltar">← Voltar</button>
+            <span class="footer-hint" id="footerHint"></span>
+            <button type="button" class="btn primary" id="btnAvancar">Continuar →</button>
+        </div>
+    </nav>
+
+    <script>
+        /* ============================================================
+                                                   1. DADOS
+                                                   ============================================================ */
+        const ESTADOS = [
+            'Acre (AC)', 'Alagoas (AL)', 'Amapá (AP)', 'Amazonas (AM)', 'Bahia (BA)', 'Ceará (CE)',
+            'Distrito Federal (DF)', 'Espírito Santo (ES)', 'Goiás (GO)', 'Maranhão (MA)',
+            'Mato Grosso (MT)', 'Mato Grosso do Sul (MS)', 'Minas Gerais (MG)', 'Pará (PA)',
+            'Paraíba (PB)', 'Paraná (PR)', 'Pernambuco (PE)', 'Piauí (PI)', 'Rio de Janeiro (RJ)',
+            'Rio Grande do Norte (RN)', 'Rio Grande do Sul (RS)', 'Rondônia (RO)', 'Roraima (RR)',
+            'Santa Catarina (SC)', 'São Paulo (SP)', 'Sergipe (SE)', 'Tocantins (TO)'
+        ];
+
+        /*
+        const IES = [
+            'CAPES — COORDENAÇÃO DE APERFEIÇOAMENTO DE PESSOAL DE NÍVEL SUPERIOR',
+            'MCTI — MINISTÉRIO DA CIÊNCIA, TECNOLOGIA E INOVAÇÃO',
+            'USP — UNIVERSIDADE DE SÃO PAULO',
+            'UFRJ — UNIVERSIDADE FEDERAL DO RIO DE JANEIRO',
+            'UFRGS — UNIVERSIDADE FEDERAL DO RIO GRANDE DO SUL',
+            'UNICAMP — UNIVERSIDADE ESTADUAL DE CAMPINAS',
+            'PUC/RJ — PONTIFÍCIA UNIVERSIDADE CATÓLICA DO RIO DE JANEIRO',
+            'UFSC — UNIVERSIDADE FEDERAL DE SANTA CATARINA',
+            'UFC — UNIVERSIDADE FEDERAL DO CEARÁ',
+            'UFMG — UNIVERSIDADE FEDERAL DE MINAS GERAIS',
+            'UFPE — UNIVERSIDADE FEDERAL DE PERNAMBUCO',
+            'UFSCAR — UNIVERSIDADE FEDERAL DE SÃO CARLOS',
+            'UFU — UNIVERSIDADE FEDERAL DE UBERLÂNDIA',
+            'UFPR — UNIVERSIDADE FEDERAL DO PARANÁ',
+            'UNESP — UNIVERSIDADE ESTADUAL PAULISTA JÚLIO DE MESQUITA FILHO',
+            'UNB — UNIVERSIDADE DE BRASÍLIA',
+            'PUC/RS — PONTIFÍCIA UNIVERSIDADE CATÓLICA DO RIO GRANDE DO SUL',
+            'UFRN — UNIVERSIDADE FEDERAL DO RIO GRANDE DO NORTE',
+            'UFSM — UNIVERSIDADE FEDERAL DE SANTA MARIA',
+            'UFPEL — UNIVERSIDADE FEDERAL DE PELOTAS',
+            'CBPF — CENTRO BRASILEIRO DE PESQUISAS FÍSICAS',
+            'IME — INSTITUTO MILITAR DE ENGENHARIA',
+            'UCB — UNIVERSIDADE CATÓLICA DE BRASÍLIA',
+            'IMPA — INSTITUTO NACIONAL DE MATEMÁTICA PURA E APLICADA',
+            'LNCC — LABORATÓRIO NACIONAL DE COMPUTAÇÃO CIENTÍFICA',
+            'UFF — UNIVERSIDADE FEDERAL FLUMINENSE',
+            'UNIT — UNIVERSIDADE TIRADENTES',
+            'UFCG — UNIVERSIDADE FEDERAL DE CAMPINA GRANDE',
+            'UEM — UNIVERSIDADE ESTADUAL DE MARINGÁ',
+            'UFPB — UNIVERSIDADE FEDERAL DA PARAÍBA',
+            'UFPI — UNIVERSIDADE FEDERAL DO PIAUÍ',
+            'UFPA — UNIVERSIDADE FEDERAL DO PARÁ',
+            'UFOP — UNIVERSIDADE FEDERAL DE OURO PRETO',
+            'UERJ — UNIVERSIDADE DO ESTADO DO RIO DE JANEIRO',
+            'UTFPR — UNIVERSIDADE TECNOLÓGICA FEDERAL DO PARANÁ',
+            'PUC/PR — PONTIFÍCIA UNIVERSIDADE CATÓLICA DO PARANÁ',
+            'ITA — INSTITUTO TECNOLÓGICO DE AERONÁUTICA',
+            'UFABC — UNIVERSIDADE FEDERAL DO ABC',
+            'UFG — UNIVERSIDADE FEDERAL DE GOIÁS',
+            'UCS — UNIVERSIDADE DE CAXIAS DO SUL',
+            'UFAM — UNIVERSIDADE FEDERAL DO AMAZONAS',
+            'UEL — UNIVERSIDADE ESTADUAL DE LONDRINA',
+            'SENAI CIMATEC — UNIVERSIDADE SENAI CIMATEC',
+            'ON — OBSERVATÓRIO NACIONAL',
+            'UFBA — UNIVERSIDADE FEDERAL DA BAHIA',
+            'UFES — UNIVERSIDADE FEDERAL DO ESPÍRITO SANTO',
+            'UFMA — UNIVERSIDADE FEDERAL DO MARANHÃO',
+            'UFAL — UNIVERSIDADE FEDERAL DE ALAGOAS',
+            'UFRPE — UNIVERSIDADE FEDERAL RURAL DE PERNAMBUCO',
+            'UFS — UNIVERSIDADE FEDERAL DE SERGIPE',
+            'UECE — UNIVERSIDADE ESTADUAL DO CEARÁ',
+            'UFJF — UNIVERSIDADE FEDERAL DE JUIZ DE FORA',
+            'UFV — UNIVERSIDADE FEDERAL DE VIÇOSA',
+            'UNIFEI — UNIVERSIDADE FEDERAL DE ITAJUBÁ',
+            'UNISINOS — UNIVERSIDADE DO VALE DO RIO DOS SINOS',
+            'UFSJ — UNIVERSIDADE FEDERAL DE SÃO JOÃO DEL REI',
+            'UENF — UNIVERSIDADE ESTADUAL DO NORTE FLUMINENSE DARCY RIBEIRO',
+            'UFT — UNIVERSIDADE FEDERAL DO TOCANTINS',
+            'UNIFESP — UNIVERSIDADE FEDERAL DE SÃO PAULO',
+            'UFMS — UNIVERSIDADE FEDERAL DE MATO GROSSO DO SUL',
+            'CEFET/MG — CENTRO FEDERAL DE EDUCAÇÃO TECNOLÓGICA DE MINAS GERAIS',
+            'UEPG — UNIVERSIDADE ESTADUAL DE PONTA GROSSA',
+            'INPE — INSTITUTO NACIONAL DE PESQUISAS ESPACIAIS',
+            'UNAERP — UNIVERSIDADE DE RIBEIRÃO PRETO',
+            'UNIOESTE — UNIVERSIDADE ESTADUAL DO OESTE DO PARANÁ',
+            'UCDB — UNIVERSIDADE CATÓLICA DOM BOSCO',
+            'UPF — UNIVERSIDADE DE PASSO FUNDO',
+            'UNISC — UNIVERSIDADE DE SANTA CRUZ DO SUL',
+            'UEFS — UNIVERSIDADE ESTADUAL DE FEIRA DE SANTANA',
+            'UNIMONTES — UNIVERSIDADE ESTADUAL DE MONTES CLAROS',
+            'PUC/SP — PONTIFÍCIA UNIVERSIDADE CATÓLICA DE SÃO PAULO',
+            'INPI — INSTITUTO NACIONAL DA PROPRIEDADE INDUSTRIAL',
+            'CNEN/CDTN — CNEN - CENTRO DE DESENVOLVIMENTO DA TECNOLOGIA NUCLEAR',
+            'UFDPAR — UNIVERSIDADE FEDERAL DO DELTA DO PARNAÍBA',
+            'UNIVATES — UNIVERSIDADE DO VALE DO TAQUARI',
+            'UFN — UNIVERSIDADE FRANCISCANA',
+            'UNOCHAPECÓ — UNIVERSIDADE COMUNITÁRIA REGIONAL DE CHAPECÓ',
+            'UNISO — UNIVERSIDADE DE SOROCABA',
+            'FEEVALE — UNIVERSIDADE FEEVALE',
+            'UNIFOR — UNIVERSIDADE DE FORTALEZA',
+            'UNINOVE — UNIVERSIDADE NOVE DE JULHO',
+            'UP — UNIVERSIDADE POSITIVO',
+            'UVV — UNIVERSIDADE VILA VELHA',
+            'IAE — INSTITUTO AERONÁUTICA E ESPAÇO',
+            'IEAv — INSTITUTO DE ESTUDOS AVANÇADOS',
+            'UFMT — UNIVERSIDADE FEDERAL DE MATO GROSSO',
+            'UNEMAT — UNIVERSIDADE DO ESTADO DE MATO GROSSO CARLOS ALBERTO REYES MALDONADO',
+            'IFMA — INSTITUTO FEDERAL DE EDUCAÇÃO, CIÊNCIA E TECNOLOGIA DO MARANHÃO',
+            'UEMA — UNIVERSIDADE ESTADUAL DO MARANHÃO',
+            'UEA — UNIVERSIDADE DO ESTADO DO AMAZONAS',
+            'UFAC — UNIVERSIDADE FEDERAL DO ACRE',
+            'UFRA — UNIVERSIDADE FEDERAL RURAL DA AMAZÔNIA',
+            'ITV — ASSOCIAÇÃO INSTITUTO TECNOLÓGICO VALE',
+            'UEPa — UNIVERSIDADE DO ESTADO DO PARÁ',
+            'UNIFESSPA — UNIVERSIDADE FEDERAL DO SUL E SUDESTE DO PARÁ',
+            'UNIR — UNIVERSIDADE FEDERAL DE RONDÔNIA',
+            'UFOPA — UNIVERSIDADE FEDERAL DO OESTE DO PARÁ',
+            'UNIFAP — UNIVERSIDADE FEDERAL DO AMAPÁ',
+            'INPA — INSTITUTO NACIONAL DE PESQUISAS DA AMAZÔNIA',
+            'UFRR — UNIVERSIDADE FEDERAL DE RORAIMA',
+            'FIOCRUZ — FUNDAÇÃO OSWALDO CRUZ',
+            'EMBRAPA — EMPRESA BRASILEIRA DE PESQUISA AGROPECUÁRIA',
+            'MPEG — MUSEU PARAENSE EMÍLIO GOELDI',
+            'IEPA — INSTITUTO DE PESQUISAS CIENTÍFICAS E TECNOLÓGICAS DO ESTADO DO AMAPÁ',
+            'UEAP — UNIVERSIDADE ESTADUAL DO AMAPÁ',
+            'IFMT — INSTITUTO FEDERAL DE EDUCAÇÃO, CIÊNCIA E TECNOLOGIA DE MATO GROSSO',
+            'IEC — INSTITUTO EVANDRO CHAGAS',
+            'IFAP — INSTITUTO FEDERAL DO AMAPÁ',
+            'IFRO — INSTITUTO FEDERAL DE RONDÔNIA',
+            'IFAC — INSTITUTO FEDERAL DO ACRE',
+            'UERR — UNIVERSIDADE ESTADUAL DE RORAIMA',
+            'UEMASUL — UNIVERSIDADE ESTADUAL DA REGIÃO TOCANTINA DO MARANHÃO',
+            'UFR — UNIVERSIDADE FEDERAL DE RONDONÓPOLIS',
+            'UNICEUMA — UNIVERSIDADE CEUMA',
+            'UNINILTONLINS — UNIVERSIDADE NILTON LINS',
+            'UDESC — UNIVERSIDADE DO ESTADO DE SANTA CATARINA',
+            'CEFET/RJ — CENTRO FEDERAL DE EDUCAÇÃO TECNOLÓGICA CELSO SUCKOW DA FONSECA',
+            'FURG — UNIVERSIDADE FEDERAL DO RIO GRANDE',
+            'UESC — UNIVERSIDADE ESTADUAL DE SANTA CRUZ',
+            'UPE — UNIVERSIDADE DE PERNAMBUCO',
+            'MACKENZIE — UNIVERSIDADE PRESBITERIANA MACKENZIE',
+            'PUC/MG — PONTIFÍCIA UNIVERSIDADE CATÓLICA DE MINAS GERAIS',
+            'UFGD — UNIVERSIDADE FEDERAL DA GRANDE DOURADOS',
+            'UFCAT — UNIVERSIDADE FEDERAL DE CATALÃO',
+            'UNIPAMPA — UNIVERSIDADE FEDERAL DO PAMPA',
+            'FEI — CENTRO UNIVERSITÁRIO DA FUNDAÇÃO EDUCACIONAL INACIANA PE SABÓIA DE MEDEIROS',
+            'UNIARA — UNIVERSIDADE DE ARARAQUARA',
+            'UERN — UNIVERSIDADE DO ESTADO DO RIO GRANDE DO NORTE',
+            'UNESC — UNIVERSIDADE DO EXTREMO SUL CATARINENSE',
+            'UNIRIO — UNIVERSIDADE FEDERAL DO ESTADO DO RIO DE JANEIRO',
+            'UNIVASF — UNIVERSIDADE FEDERAL DO VALE DO SÃO FRANCISCO',
+            'UEPB — UNIVERSIDADE ESTADUAL DA PARAÍBA',
+            'UNIJUÍ — UNIVERSIDADE REGIONAL DO NOROESTE DO ESTADO DO RIO GRANDE DO SUL',
+            'UNICAP — UNIVERSIDADE CATÓLICA DE PERNAMBUCO',
+            'UAM — UNIVERSIDADE ANHEMBI MORUMBI',
+            'UNIP — UNIVERSIDADE PAULISTA',
+            'FGV — FUNDAÇÃO GETÚLIO VARGAS',
+            'UNICID — UNIVERSIDADE CIDADE DE SÃO PAULO',
+            'UNIFAL — UNIVERSIDADE FEDERAL DE ALFENAS',
+            'UFVJM — UNIVERSIDADE FEDERAL DOS VALES DO JEQUITINHONHA E MUCURI',
+            'UEMG — UNIVERSIDADE DO ESTADO DE MINAS GERAIS',
+            'UESPI — UNIVERSIDADE ESTADUAL DO PIAUÍ',
+            'UNICENTRO — UNIVERSIDADE ESTADUAL DO CENTRO-OESTE',
+            'IFGoiano — INSTITUTO FEDERAL DE EDUCAÇÃO, CIÊNCIA E TECNOLOGIA GOIANO',
+            'PUC/GOIÁS — PONTIFÍCIA UNIVERSIDADE CATÓLICA DE GOIÁS',
+            'UFLA — UNIVERSIDADE FEDERAL DE LAVRAS',
+            'IFCE — INSTITUTO FEDERAL DE EDUCAÇÃO, CIÊNCIA E TECNOLOGIA DO CEARÁ',
+            'IFES — INSTITUTO FEDERAL DE EDUCAÇÃO, CIÊNCIA E TECNOLOGIA DO ESPÍRITO SANTO',
+            'UFERSA — UNIVERSIDADE FEDERAL RURAL DO SEMI-ÁRIDO',
+            'UFRRJ — UNIVERSIDADE FEDERAL RURAL DO RIO DE JANEIRO',
+            'IFFLUMINENSE — INSTITUTO FEDERAL DE EDUCAÇÃO, CIÊNCIA E TECNOLOGIA FLUMINENSE',
+            'IFBA — INSTITUTO FEDERAL DE EDUCAÇÃO, CIÊNCIA E TECNOLOGIA DA BAHIA',
+            'UFTM — UNIVERSIDADE FEDERAL DO TRIÂNGULO MINEIRO',
+            'IFRS — INSTITUTO FEDERAL DE EDUCAÇÃO, CIÊNCIA E TECNOLOGIA DO RIO GRANDE DO SUL',
+            'UNIVALI — UNIVERSIDADE DO VALE DO ITAJAÍ',
+            'PUCCAMP — PONTIFÍCIA UNIVERSIDADE CATÓLICA DE CAMPINAS',
+            'UNICESUMAR — UNIVERSIDADE CESUMAR',
+            'UniFOA — CENTRO UNIVERSITÁRIO DE VOLTA REDONDA',
+            'USJT — UNIVERSIDADE SÃO JUDAS TADEU',
+            'FURB — UNIVERSIDADE REGIONAL DE BLUMENAU',
+            'UNIVILLE — UNIVERSIDADE DA REGIÃO DE JOINVILLE',
+            'IFPI — INSTITUTO FEDERAL DE EDUCAÇÃO, CIÊNCIA E TECNOLOGIA DO PIAUÍ',
+            'IFSP — INSTITUTO FEDERAL DE EDUCAÇÃO, CIÊNCIA E TECNOLOGIA DE SÃO PAULO',
+            'UNILAB — UNIVERSIDADE DA INTEGRAÇÃO INTERNACIONAL DA LUSOFONIA AFRO-BRASILEIRA',
+            'UCPEL — UNIVERSIDADE CATÓLICA DE PELOTAS',
+            'UNEB — UNIVERSIDADE DO ESTADO DA BAHIA',
+            'UFOB — UNIVERSIDADE FEDERAL DO OESTE DA BAHIA',
+            'INMETRO — INSTITUTO NACIONAL DE METROLOGIA, QUALIDADE E TECNOLOGIA',
+            'UNILA — UNIVERSIDADE FEDERAL DA INTEGRAÇÃO LATINO-AMERICANA',
+            'IEAPM — INSTITUTO DE ESTUDOS DO MAR ALMIRANTE PAULO MOREIRA',
+            'IFPR — INSTITUTO FEDERAL DE EDUCAÇÃO, CIÊNCIA E TECNOLOGIA DO PARANÁ',
+            'IFPB — INSTITUTO FEDERAL DE EDUCAÇÃO, CIÊNCIA E TECNOLOGIA DA PARAÍBA',
+            'IFPA — INSTITUTO FEDERAL DE EDUCAÇÃO, CIÊNCIA E TECNOLOGIA DO PARÁ',
+            'IFSUL — INSTITUTO FEDERAL DE EDUCAÇÃO, CIÊNCIA E TECNOLOGIA SUL-RIO-GRANDENSE',
+            'IFSC — INSTITUTO FEDERAL DE EDUCAÇÃO, CIÊNCIA E TECNOLOGIA DE SANTA CATARINA',
+            'IBEX — INSTITUTO DE BIOLOGIA DO EXÉRCITO',
+            'IFG — INSTITUTO FEDERAL DE EDUCAÇÃO, CIÊNCIA E TECNOLOGIA DE GOIÁS',
+            'UFSB — UNIVERSIDADE FEDERAL DO SUL DA BAHIA',
+            'UNIVAP — UNIVERSIDADE DO VALE DO PARAÍBA',
+            'UB — UNIVERSIDADE BRASIL',
+            'UMC — UNIVERSIDADE DE MOGI DAS CRUZES',
+            'FCE — FACULDADE CESAR',
+            'UNP — UNIVERSIDADE POTIGUAR',
+            'INATEL — INSTITUTO NACIONAL DE TELECOMUNICAÇÕES',
+            'UNISANTA — UNIVERSIDADE SANTA CECÍLIA',
+            'UNIFACS — UNIVERSIDADE SALVADOR',
+            'CESMAC — CENTRO UNIVERSITÁRIO CESMAC',
+            'UNINTA — CENTRO UNIVERSITÁRIO INTA',
+            'CEETEPS — CENTRO ESTADUAL DE EDUCAÇÃO TECNOLÓGICA PAULA SOUZA',
+            'FUNED — FUNDAÇÃO EZEQUIEL DIAS',
+            'LACTEC — LACTEC',
+            'UNIUBE — UNIVERSIDADE DE UBERABA',
+            'UNC — UNIVERSIDADE DO CONTESTADO',
+            'UNITAU — UNIVERSIDADE DE TAUBATÉ',
+            'UCP/RJ — UNIVERSIDADE CATÓLICA DE PETRÓPOLIS',
+            'ISD — INSTITUTO DE ENSINO E PESQUISA ALBERTO SANTOS DUMONT',
+            'USU — UNIVERSIDADE SANTA ÚRSULA',
+            'UNISATC — CENTRO UNIVERSITÁRIO SATC',
+            'UNIFACCAMP — CENTRO UNIVERSITÁRIO CAMPO LIMPO PAULISTA',
+            'UNIFEMM — CENTRO UNIVERSITÁRIO DE SETE LAGOAS',
+            'IETEC — INSTITUTO DE EDUCAÇÃO TECNOLÓGICA',
+            'UNIAN-SP — UNIVERSIDADE ANHANGUERA DE SÃO PAULO',
+            'FUMEC — UNIVERSIDADE FUMEC',
+            'ITEGAM — INSTITUTO DE TECNOLOGIA E EDUCAÇÃO GALILEO DA AMAZÔNIA',
+            'GNARUS — INSTITUTO GNARUS',
+            'APM — ACADEMIA DE POLÍCIA MILITAR DE MINAS GERAIS',
+            'UNIPLAC/SC — UNIVERSIDADE DO PLANALTO CATARINENSE'
+        ];
+        */
+
+        const IES = ['ACADEMIA MILITAR DAS AGULHAS NEGRAS (AMAN)', 'CENTRO FEDERAL DE EDUCAÇÃO TECNOLÓGICA CELSO SUCKOW DA FONSECA (CEFET/RJ)', 'CENTRO FEDERAL DE EDUCAÇÃO TECNOLÓGICA DE MINAS GERAIS (CEFET/MG)', 'CENTRO UNIVERSITÁRIO DAS FACULDADES ASSOCIADAS DE ENSINO - FAE (UNIFAE)', 'CENTRO UNIVERSITÁRIO DE ADAMANTINA (FAI)', 'CENTRO UNIVERSITÁRIO DE GOIATUBA (UNICERRADO)', 'CENTRO UNIVERSITÁRIO DE MINEIROS (UNIFIMES)', 'CENTRO UNIVERSITÁRIO DE SANTA FÉ DO SUL (UNIFUNEC)', 'CENTRO UNIVERSITÁRIO DE UNIÃO DA VITÓRIA (UNIUV)', 'CENTRO UNIVERSITÁRIO MUNICIPAL DE FRANCA (UNI-FACEF)', 'COLÉGIO PEDRO II (CP II)', 'FUNDAÇÃO UNIVERSIDADE DO ESTADO DE SANTA CATARINA (UDESC)', 'FUNDAÇÃO UNIVERSIDADE FEDERAL DA GRANDE DOURADOS (UFGD)', 'FUNDAÇÃO UNIVERSIDADE FEDERAL DE CIÊNCIAS DA SAÚDE DE PORTO ALEGRE (UFCSPA)', 'FUNDAÇÃO UNIVERSIDADE FEDERAL DE RONDÔNIA (UNIR)', 'FUNDAÇÃO UNIVERSIDADE FEDERAL DO ABC (UFABC)', 'FUNDAÇÃO UNIVERSIDADE FEDERAL DO PAMPA - UNIPAMPA (UNIPAMPA)', 'FUNDAÇÃO UNIVERSIDADE FEDERAL DO TOCANTINS (UFT)', 'FUNDAÇÃO UNIVERSIDADE FEDERAL DO VALE DO SÃO FRANCISCO (UNIVASF)', 'INSTITUTO FEDERAL DE EDUCAÇÃO, CIÊNCIA E TECNOLOGIA BAIANO (IFBAIANO)', 'INSTITUTO FEDERAL DE EDUCAÇÃO, CIÊNCIA E TECNOLOGIA CATARINENSE (IF CATARINENSE)', 'INSTITUTO FEDERAL DE EDUCAÇÃO, CIÊNCIA E TECNOLOGIA DA BAHIA (IFBA)', 'INSTITUTO FEDERAL DE EDUCAÇÃO, CIÊNCIA E TECNOLOGIA DA PARAÍBA (IFPB)', 'INSTITUTO FEDERAL DE EDUCAÇÃO, CIÊNCIA E TECNOLOGIA DE ALAGOAS (IFAL)', 'INSTITUTO FEDERAL DE EDUCAÇÃO, CIENCIA E TECNOLOGIA DE BRASILIA (IFB)', 'INSTITUTO FEDERAL DE EDUCAÇÃO, CIÊNCIA E TECNOLOGIA DE GOIÁS (IFG)', 'INSTITUTO FEDERAL DE EDUCAÇÃO, CIÊNCIA E TECNOLOGIA DE MATO GROSSO (IFMT)', 'INSTITUTO FEDERAL DE EDUCAÇÃO, CIÊNCIA E TECNOLOGIA DE MATO GROSSO DO SUL (IFMS)', 'INSTITUTO FEDERAL DE EDUCAÇÃO, CIÊNCIA E TECNOLOGIA DE MINAS GERAIS (IFMG)', 'INSTITUTO FEDERAL DE EDUCAÇÃO, CIÊNCIA E TECNOLOGIA DE PERNAMBUCO (IFPE)', 'INSTITUTO FEDERAL DE EDUCAÇÃO CIÊNCIA E TECNOLOGIA DE RONDÔNIA (IFRO)', 'INSTITUTO FEDERAL DE EDUCAÇÃO, CIÊNCIA E TECNOLOGIA DE RORAIMA (IFRR)', 'INSTITUTO FEDERAL DE EDUCAÇÃO, CIÊNCIA E TECNOLOGIA DE SANTA CATARINA (IFSC)', 'INSTITUTO FEDERAL DE EDUCAÇÃO, CIÊNCIA E TECNOLOGIA DE SÃO PAULO (IFSP)', 'INSTITUTO FEDERAL DE EDUCAÇÃO, CIÊNCIA E TECNOLOGIA DE SERGIPE (IFS)', 'INSTITUTO FEDERAL DE EDUCAÇÃO, CIÊNCIA E TECNOLOGIA DO ACRE (IFAC)', 'INSTITUTO FEDERAL DE EDUCAÇÃO, CIÊNCIA E TECNOLOGIA DO AMAPÁ (IFAP)', 'INSTITUTO FEDERAL DE EDUCAÇÃO, CIÊNCIA E TECNOLOGIA DO AMAZONAS (IFAM)', 'INSTITUTO FEDERAL DE EDUCAÇÃO, CIÊNCIA E TECNOLOGIA DO CEARÁ (IFCE)', 'INSTITUTO FEDERAL DE EDUCAÇÃO, CIÊNCIA E TECNOLOGIA DO ESPÍRITO SANTO (IFES)', 'INSTITUTO FEDERAL DE EDUCAÇÃO, CIÊNCIA E TECNOLOGIA DO MARANHÃO (IFMA)', 'INSTITUTO FEDERAL DE EDUCAÇÃO, CIÊNCIA E TECNOLOGIA DO NORTE DE MINAS GERAIS (IFNMG)', 'INSTITUTO FEDERAL DE EDUCAÇÃO, CIÊNCIA E TECNOLOGIA DO PARÁ (IFPA)', 'INSTITUTO FEDERAL DE EDUCAÇÃO, CIÊNCIA E TECNOLOGIA DO PARANÁ (IFPR)', 'INSTITUTO FEDERAL DE EDUCAÇÃO, CIÊNCIA E TECNOLOGIA DO PIAUÍ (IFPI)', 'INSTITUTO FEDERAL DE EDUCAÇÃO, CIÊNCIA E TECNOLOGIA DO RIO DE JANEIRO (IFRJ)', 'INSTITUTO FEDERAL DE EDUCAÇÃO, CIÊNCIA E TECNOLOGIA DO RIO GRANDE DO NORTE (IFRN)', 'INSTITUTO FEDERAL DE EDUCAÇÃO, CIÊNCIA E TECNOLOGIA DO RIO GRANDE DO SUL (IFRS)', 'INSTITUTO FEDERAL DE EDUCAÇÃO, CIÊNCIA E TECNOLOGIA DO SERTÃO PERNAMBUCANO (IF SERTÃO-PE)', 'INSTITUTO FEDERAL DE EDUCAÇÃO, CIÊNCIA E TECNOLOGIA DO SUDESTE DE MINAS GERAIS (IFSEMG)', 'INSTITUTO FEDERAL DE EDUCAÇÃO, CIÊNCIA E TECNOLOGIA DO SUL DE MINAS GERAIS (IF SUL DE MINAS)', 'INSTITUTO FEDERAL DE EDUCAÇÃO, CIÊNCIA E TECNOLOGIA DO TOCANTINS (IFTO)', 'INSTITUTO FEDERAL DE EDUCAÇÃO, CIÊNCIA E TECNOLOGIA DO TRIÂNGULO MINEIRO (IFTM)', 'INSTITUTO FEDERAL DE EDUCAÇÃO, CIÊNCIA E TECNOLOGIA FARROUPILHA (IFFARROUPILHA)', 'INSTITUTO FEDERAL DE EDUCAÇÃO, CIÊNCIA E TECNOLOGIA FLUMINENSE (IF FLUMINENSE)', 'INSTITUTO FEDERAL DE EDUCAÇÃO, CIÊNCIA E TECNOLOGIA GOIANO (IF GOIANO)', 'INSTITUTO FEDERAL DE EDUCAÇÃO, CIÊNCIA E TECNOLOGIA SUL-RIO-GRANDENSE (IFSUL)', 'UNIVERSIDADE DA INTEGRAÇÃO INTERNACIONAL DA LUSOFONIA AFRO-BRASILEIRA (UNILAB)', 'UNIVERSIDADE DE BRASÍLIA (UNB)', 'UNIVERSIDADE DE GURUPI (UNIRG)', 'UNIVERSIDADE DE PERNAMBUCO (UPE)', 'UNIVERSIDADE DE RIO VERDE (FESURV)', 'UNIVERSIDADE DE SÃO PAULO (USP)', 'UNIVERSIDADE DE TAUBATÉ (UNITAU)', 'UNIVERSIDADE DO CONTESTADO (UNC)', 'UNIVERSIDADE DO DISTRITO FEDERAL (UNDF)', 'UNIVERSIDADE DO ESTADO DA BAHIA (UNEB)', 'UNIVERSIDADE DO ESTADO DE MATO GROSSO CARLOS ALBERTO REYES MALDONADO - UNEMAT (UNEMAT)', 'UNIVERSIDADE DO ESTADO DE MINAS GERAIS (UEMG)', 'UNIVERSIDADE DO ESTADO DO AMAPÁ (UEAP)', 'UNIVERSIDADE DO ESTADO DO AMAZONAS (UEA)', 'UNIVERSIDADE DO ESTADO DO PARÁ (UEPA)', 'UNIVERSIDADE DO ESTADO DO RIO DE JANEIRO (UERJ)', 'UNIVERSIDADE DO ESTADO DO RIO GRANDE DO NORTE (UERN)', 'UNIVERSIDADE ESTADUAL DA PARAÍBA (UEPB)', 'UNIVERSIDADE ESTADUAL DA REGIÃO TOCANTINA DO MARANHÃO (UEMASUL)', 'UNIVERSIDADE ESTADUAL DE ALAGOAS - UNEAL (UNEAL)', 'UNIVERSIDADE ESTADUAL DE CAMPINAS (UNICAMP)', 'UNIVERSIDADE ESTADUAL DE CIÊNCIAS DA SAÚDE DE ALAGOAS - UNCISAL (UNCISAL)', 'UNIVERSIDADE ESTADUAL DE FEIRA DE SANTANA (UEFS)', 'UNIVERSIDADE ESTADUAL DE GOIÁS (UEG)', 'UNIVERSIDADE ESTADUAL DE LONDRINA (UEL)', 'UNIVERSIDADE ESTADUAL DE MARINGÁ (UEM)', 'UNIVERSIDADE ESTADUAL DE MATO GROSSO DO SUL (UEMS)', 'UNIVERSIDADE ESTADUAL DE MONTES CLAROS (UNIMONTES)', 'UNIVERSIDADE ESTADUAL DE PONTA GROSSA (UEPG)', 'UNIVERSIDADE ESTADUAL DE RORAIMA (UERR)', 'UNIVERSIDADE ESTADUAL DE SANTA CRUZ (UESC)', 'UNIVERSIDADE ESTADUAL DO CEARÁ (UECE)', 'UNIVERSIDADE ESTADUAL DO CENTRO OESTE (UNICENTRO)', 'UNIVERSIDADE ESTADUAL DO MARANHÃO (UEMA)', 'UNIVERSIDADE ESTADUAL DO NORTE DO PARANÁ (UENP)', 'UNIVERSIDADE ESTADUAL DO NORTE FLUMINENSE DARCY RIBEIRO (UENF)', 'UNIVERSIDADE ESTADUAL DO OESTE DO PARANÁ (UNIOESTE)', 'UNIVERSIDADE ESTADUAL DO PARANÁ (UNESPAR)', 'UNIVERSIDADE ESTADUAL DO PIAUÍ (UESPI)', 'UNIVERSIDADE ESTADUAL DO RIO GRANDE DO SUL (UERGS)', 'UNIVERSIDADE ESTADUAL DO SUDOESTE DA BAHIA (UESB)', 'UNIVERSIDADE ESTADUAL DO TOCANTINS (UNITINS)', 'UNIVERSIDADE ESTADUAL PAULISTA JÚLIO DE MESQUITA FILHO (UNESP)', 'UNIVERSIDADE ESTADUAL VALE DO ACARAÚ (UVA)', 'UNIVERSIDADE FEDERAL DA BAHIA (UFBA)', 'UNIVERSIDADE FEDERAL DA FRONTEIRA SUL (UFFS)', 'UNIVERSIDADE FEDERAL DA INTEGRAÇÃO LATINO-AMERICANA (UNILA)', 'UNIVERSIDADE FEDERAL DA PARAÍBA (UFPB)', 'UNIVERSIDADE FEDERAL DE ALAGOAS (UFAL)', 'UNIVERSIDADE FEDERAL DE ALFENAS (UNIFAL-MG)', 'UNIVERSIDADE FEDERAL DE CAMPINA GRANDE (UFCG)', 'UNIVERSIDADE FEDERAL DE CATALÃO (UFCAT)', 'UNIVERSIDADE FEDERAL DE GOIÁS (UFG)', 'UNIVERSIDADE FEDERAL DE ITAJUBÁ - UNIFEI (UNIFEI)', 'UNIVERSIDADE FEDERAL DE JATAÍ (UFJ)', 'UNIVERSIDADE FEDERAL DE JUIZ DE FORA (UFJF)', 'UNIVERSIDADE FEDERAL DE LAVRAS (UFLA)', 'UNIVERSIDADE FEDERAL DE MATO GROSSO (UFMT)', 'UNIVERSIDADE FEDERAL DE MATO GROSSO DO SUL (UFMS)', 'UNIVERSIDADE FEDERAL DE MINAS GERAIS (UFMG)', 'UNIVERSIDADE FEDERAL DE OURO PRETO (UFOP)', 'UNIVERSIDADE FEDERAL DE PELOTAS (UFPEL)', 'UNIVERSIDADE FEDERAL DE PERNAMBUCO (UFPE)', 'UNIVERSIDADE FEDERAL DE RONDONÓPOLIS (UFR)', 'UNIVERSIDADE FEDERAL DE RORAIMA (UFRR)', 'UNIVERSIDADE FEDERAL DE SANTA CATARINA (UFSC)', 'UNIVERSIDADE FEDERAL DE SANTA MARIA (UFSM)', 'UNIVERSIDADE FEDERAL DE SÃO CARLOS (UFSCAR)', 'UNIVERSIDADE FEDERAL DE SÃO JOÃO DEL REI (UFSJ)', 'UNIVERSIDADE FEDERAL DE SÃO PAULO (UNIFESP)', 'UNIVERSIDADE FEDERAL DE SERGIPE (UFS)', 'UNIVERSIDADE FEDERAL DE UBERLÂNDIA (UFU)', 'UNIVERSIDADE FEDERAL DE VIÇOSA (UFV)', 'UNIVERSIDADE FEDERAL DO ACRE (UFAC)', 'UNIVERSIDADE FEDERAL DO AGRESTE DE PERNAMBUCO (UFAPE )', 'UNIVERSIDADE FEDERAL DO AMAPÁ (UNIFAP)', 'UNIVERSIDADE FEDERAL DO AMAZONAS (UFAM)', 'UNIVERSIDADE FEDERAL DO CARIRI (UFCA)', 'UNIVERSIDADE FEDERAL DO CEARÁ (UFC)', 'UNIVERSIDADE FEDERAL DO DELTA DO PARNAIBA (UFDPAR)', 'UNIVERSIDADE FEDERAL DO ESPÍRITO SANTO (UFES)', 'UNIVERSIDADE FEDERAL DO ESTADO DO RIO DE JANEIRO (UNIRIO)', 'UNIVERSIDADE FEDERAL DO MARANHÃO (UFMA)', 'UNIVERSIDADE FEDERAL DO NORTE DO TOCANTINS (UFNT)', 'UNIVERSIDADE FEDERAL DO OESTE DA BAHIA (UFOB)', 'UNIVERSIDADE FEDERAL DO OESTE DO PARÁ (UFOPA)', 'UNIVERSIDADE FEDERAL DO PARÁ (UFPA)', 'UNIVERSIDADE FEDERAL DO PARANÁ (UFPR)', 'UNIVERSIDADE FEDERAL DO PIAUÍ (UFPI)', 'UNIVERSIDADE FEDERAL DO RECÔNCAVO DA BAHIA (UFRB)', 'UNIVERSIDADE FEDERAL DO RIO DE JANEIRO (UFRJ)', 'UNIVERSIDADE FEDERAL DO RIO GRANDE (FURG)', 'UNIVERSIDADE FEDERAL DO RIO GRANDE DO NORTE (UFRN)', 'UNIVERSIDADE FEDERAL DO RIO GRANDE DO SUL (UFRGS)', 'UNIVERSIDADE FEDERAL DO SUL DA BAHIA (UFSB)', 'UNIVERSIDADE FEDERAL DO SUL E SUDESTE DO PARÁ (UNIFESSPA)', 'UNIVERSIDADE FEDERAL DOS VALES DO JEQUITINHONHA E MUCURI (UFVJM)', 'UNIVERSIDADE FEDERAL DO TRIÂNGULO MINEIRO (UFTM)', 'UNIVERSIDADE FEDERAL FLUMINENSE (UFF)', 'UNIVERSIDADE FEDERAL RURAL DA AMAZÔNIA (UFRA)', 'UNIVERSIDADE FEDERAL RURAL DE PERNAMBUCO (UFRPE)', 'UNIVERSIDADE FEDERAL RURAL DO RIO DE JANEIRO (UFRRJ)', 'UNIVERSIDADE FEDERAL RURAL DO SEMI-ÁRIDO (UFERSA)', 'UNIVERSIDADE MUNICIPAL DE SÃO CAETANO DO SUL (USCS)', 'UNIVERSIDADE REGIONAL DE BLUMENAU (FURB)', 'UNIVERSIDADE REGIONAL DO CARIRI (URCA)', 'UNIVERSIDADE TECNOLÓGICA FEDERAL DO PARANÁ (UTFPR)']
+
+        const MATRIZ_AVALIACAO = [{
+            id: 'matriz_quantidade',
+            label: 'Quantidade de conteúdos'
+        }, {
+            id: 'matriz_teoriaPratica',
+            label: 'Relação entre teoria e prática'
+        }, {
+            id: 'matriz_integracao',
+            label: 'Integração com demais áreas da Engenharia de Produção'
+        }];
+
+        const MATRIZ_OPCOES = [
+            'Muito inadequada', 'Inadequada', 'Adequada', 'Muito adequada', 'Não sei avaliar'
+        ];
+
+        const RESUMO = [{
+            titulo: 'Consentimento',
+            itens: [{
+                n: 'consentimento',
+                l: 'Concordância em participar'
+            }]
+        }, {
+            titulo: 'Perfil do participante',
+            itens: [{
+                    n: 'idade',
+                    l: '2. Idade'
+                }, {
+                    n: 'sexo',
+                    l: '3. Sexo'
+                }, {
+                    n: 'periodo',
+                    l: '4. Período do curso'
+                }, {
+                    n: 'estado',
+                    l: '5. Estado da instituição'
+                },
+
+                /* Caso use Seleção
+                { n: 'tipoIES', l: '6. Tipo de IES' }
+                */
+                /* Caso use Menu Suspenso */
+                {
+                    n: 'ies',
+                    l: '6. Instituição de Ensino Superior'
+                },
+            ]
+        }, {
+            titulo: 'Avaliação do ensino',
+            itens: [
+                ...MATRIZ_AVALIACAO.map(m => ({
+                    n: m.id,
+                    l: `7. ${m.label}`
+                })), {
+                    n: 'suficiente',
+                    l: '8. Formação suficiente para o mercado'
+                }, {
+                    n: 'avaliacaoEnsino',
+                    l: '9. Avaliação do ensino recebido'
+                }
+            ]
+        }, {
+            titulo: 'Importância atribuída',
+            itens: [{
+                n: 'importancia',
+                l: '10. Importância dos conteúdos'
+            }]
+        }, {
+            titulo: 'Escolha do tema de TCC',
+            itens: [{
+                n: 'situacaoTCC',
+                l: '11. Situação atual em relação ao TCC'
+            }, {
+                n: 'pretendeTCC',
+                l: '12. Pretende desenvolver TCC na área'
+            }, {
+                n: 'fatorPrincipal',
+                l: '13. Principal fator para a escolha do tema',
+                outro: 'fatorPrincipal_outro'
+            }]
+        }, {
+            titulo: 'Fatores e influências',
+            itens: [{
+                n: 'fatoresTCC',
+                l: '14. Fatores para escolher tema da área',
+                outro: 'fatoresTCC_outro'
+            }, {
+                n: 'motivoNaoTCC',
+                l: '15. Motivo para não escolher tema da área',
+                outro: 'motivoNaoTCC_outro'
+            }, {
+                n: 'influenciaContato',
+                l: '16. Influência do contato durante a graduação'
+            }, {
+                n: 'maisAtividades',
+                l: '17. Impacto de mais atividades práticas'
+            }]
+        }];
+
+        /* ============================================================
+           2. ESTADO
+           ============================================================ */
+        const TOTAL = 8;
+        const ROTULOS_ETAPAS = ['Apresentação', 'Consentimento', 'Perfil', 'Avaliação', 'Importância', 'TCC', 'Fatores', 'Revisão'];
+        const STORAGE_KEY = 'pesquisa_ga_sustentabilidade_rascunho';
+        const STORAGE_ENVIO = 'pesquisa_ga_sustentabilidade_resposta';
+
+        /* URL do Google Apps Script — preencher depois */
+        const API_URL = 'https://script.google.com/macros/s/AKfycbzG1OJoyuTQ7ANwfHOhwZguU2uBrIOP0u6GIzFtwC4SshL5tpROvwC3RhBth7K2PZML/exec';
+
+        let atual = 0;
+        const visitados = new Set([0]);
+
+        const form = document.getElementById('pesquisa');
+        const steps = [...document.querySelectorAll('.step')];
+        const progressFill = document.getElementById('progressFill');
+        const progressBar = document.getElementById('progressBar');
+        const stepCount = document.getElementById('stepCount');
+        const stepsNav = document.getElementById('stepsNav');
+        const erroBanner = document.getElementById('erroBanner');
+        const btnVoltar = document.getElementById('btnVoltar');
+        const btnAvancar = document.getElementById('btnAvancar');
+        const footerNav = document.getElementById('footerNav');
+        const footerHint = document.getElementById('footerHint');
+
+        /* ============================================================
+           3. MATRIZ
+           ============================================================ */
+        function renderMatriz() {
+            const tbody = document.querySelector('#matrizAvaliacao tbody');
+            tbody.innerHTML = MATRIZ_AVALIACAO.map((linha, i) => `
+                <tr>
+                    <td>${linha.label}</td>
+                    ${MATRIZ_OPCOES.map((op, j) => `
+                        <td>
+                            <label class="cel" title="${op}">
+                                <input type="radio" name="${linha.id}" value="${op}"
+                                       aria-label="${linha.label} — ${op}">
+                            </label>
+                        </td>
+                    `).join('')}
+                </tr>
+            `).join('');
+        }
+        renderMatriz();
+
+        /* ============================================================
+           4. SEARCH SELECT
+           ============================================================ */
+        function normalizar(str) {
+            return String(str).toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+        }
+
+        function initSearchSelect(wrapper, opcoes) {
+            const input = wrapper.querySelector('.search-select-input');
+            const hidden = wrapper.querySelector('input[type="hidden"]');
+            const dropdown = wrapper.querySelector('.search-select-dropdown');
+            const searchInput = wrapper.querySelector('.search-select-search');
+            const list = wrapper.querySelector('.search-select-list');
+
+            let highlighted = -1;
+
+            function renderList(filtro = '') {
+                const f = normalizar(filtro);
+                const matches = opcoes.filter(c => normalizar(c).includes(f));
+                highlighted = -1;
+
+                if (matches.length === 0) {
+                    list.innerHTML = '<li class="empty">Nenhum resultado encontrado</li>';
+                    return;
+                }
+
+                list.innerHTML = matches.map(c => {
+                    const sel = c === hidden.value ? 'selected' : '';
+                    const safe = c.replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+                    return `<li data-value="${safe}" class="${sel}" role="option">${safe}</li>`;
+                }).join('');
+            }
+
+            function abrir() {
+                wrapper.classList.add('open');
+                dropdown.hidden = false;
+                searchInput.value = '';
+                renderList('');
+                searchInput.focus();
+                const sel = list.querySelector('li.selected');
+                if (sel) sel.scrollIntoView({ block: 'nearest' });
+            }
+
+            function fechar() {
+                wrapper.classList.remove('open');
+                dropdown.hidden = true;
+            }
+
+            function selecionar(valor) {
+                hidden.value = valor;
+                input.value = valor;
+                fechar();
+                wrapper.dispatchEvent(new Event('change', { bubbles: true }));
+            }
+
+            function destacar(index) {
+                const itens = [...list.querySelectorAll('li:not(.empty)')];
+                if (itens.length === 0) return;
+                highlighted = Math.max(0, Math.min(itens.length - 1, index));
+                itens.forEach((li, i) => li.classList.toggle('highlighted', i === highlighted));
+                itens[highlighted].scrollIntoView({ block: 'nearest' });
+            }
+
+            input.addEventListener('click', e => {
+                e.stopPropagation();
+                if (dropdown.hidden) abrir(); else fechar();
+            });
+
+            input.addEventListener('keydown', e => {
+                if (e.key === 'Enter' || e.key === ' ' || e.key === 'ArrowDown') {
+                    e.preventDefault();
+                    if (dropdown.hidden) abrir();
+                } else if (e.key === 'Escape') {
+                    fechar();
+                }
+            });
+
+            searchInput.addEventListener('input', () => renderList(searchInput.value));
+
+            searchInput.addEventListener('keydown', e => {
+                const itens = [...list.querySelectorAll('li:not(.empty)')];
+                if (e.key === 'ArrowDown') { e.preventDefault(); destacar(highlighted + 1); }
+                else if (e.key === 'ArrowUp') { e.preventDefault(); destacar(highlighted - 1); }
+                else if (e.key === 'Enter') {
+                    e.preventDefault();
+                    const alvo = itens[highlighted] || itens[0];
+                    if (alvo) selecionar(alvo.dataset.value);
+                } else if (e.key === 'Escape') { fechar(); input.focus(); }
+            });
+
+            list.addEventListener('click', e => {
+                const li = e.target.closest('li');
+                if (!li || li.classList.contains('empty')) return;
+                selecionar(li.dataset.value);
+            });
+
+            document.addEventListener('click', e => {
+                if (!wrapper.contains(e.target)) fechar();
+            });
+        }
+
+        initSearchSelect(document.getElementById('estado-search-select'), ESTADOS);
+
+        initSearchSelect(document.getElementById('ies-search-select'), IES); // Menu suspenso das universidades - Ocultar caso usar seleção
+
+        /* ============================================================
+           5. NAVEGAÇÃO
+           ============================================================ */
+        function renderNav() {
+            stepsNav.innerHTML = steps.map((s, i) => `
+                <button type="button" class="step-dot ${i === atual ? 'active' : ''} ${i < atual ? 'done' : ''}"
+                        data-i="${i}" ${visitados.has(i) ? '' : 'disabled style="opacity:.55;cursor:default"'}>
+                    <span>${i + 1}</span><em>${ROTULOS_ETAPAS[i]}</em>
+                </button>`).join('');
+        }
+
+        function atualizarProgresso() {
+            const pct = Math.round(((atual + 1) / TOTAL) * 100);
+            progressFill.style.width = pct + '%';
+            progressBar.setAttribute('aria-valuenow', pct);
+            stepCount.textContent = `Etapa ${atual + 1} de ${TOTAL}`;
+        }
+
+        function atualizarBotoes() {
+            btnVoltar.disabled = (atual === 0);
+            btnAvancar.textContent = (atual === TOTAL - 1) ? 'Enviar respostas ✓' : 'Continuar →';
+            const dicas = [
+                'Leia com atenção antes de prosseguir.',
+                'Participação voluntária e anônima.',
+                'Nenhum dado identifica você individualmente.',
+                'Responda cada linha da matriz.',
+                'Reflita sobre sua formação.',
+                'Pense na sua situação atual em relação ao TCC.',
+                'Selecione no máximo 3 fatores.',
+                'Revise e envie suas respostas.'
+            ];
+            footerHint.textContent = dicas[atual] || '';
+        }
+
+        function irPara(i) {
+            atual = Math.max(0, Math.min(TOTAL - 1, i));
+            visitados.add(atual);
+            steps.forEach((s, idx) => s.classList.toggle('active', idx === atual));
+            limparErros();
+            renderNav();
+            atualizarProgresso();
+            atualizarBotoes();
+            if (atual === TOTAL - 1) gerarResumo();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        /* ============================================================
+           6. VALIDAÇÃO
+           ============================================================ */
+        function mostrarErro(msg) {
+            erroBanner.textContent = '⚠ ' + msg;
+            erroBanner.hidden = false;
+            erroBanner.scrollIntoView({ block: 'center', behavior: 'smooth' });
+        }
+
+        function limparErros() {
+            erroBanner.hidden = true;
+            document.querySelectorAll('.invalido').forEach(el => el.classList.remove('invalido'));
+        }
+
+        function marcarInvalido(name) {
+            const el = document.querySelector(`[name="${name}"]`);
+            if (!el) return;
+            const bloco = el.closest('.questao, .campo');
+            if (bloco) bloco.classList.add('invalido');
+        }
+
+        function checked(name) { return document.querySelector(`input[name="${name}"]:checked`); }
+
+        function ehOutro(valor) { return String(valor).toLowerCase().startsWith('outro'); }
+
+        function validarEtapa(i) {
+            limparErros();
+            const faltando = [];
+
+            /* Etapa 1 — Consentimento */
+            if (i === 1) {
+                const c = checked('consentimento');
+                if (!c) {
+                    marcarInvalido('consentimento');
+                    mostrarErro('É necessário indicar se você concorda em participar da pesquisa.');
+                    return false;
+                }
+                if (c.value.startsWith('Não')) {
+                    encerrar(
+                        'Participação não autorizada',
+                        'Você optou por não participar desta pesquisa. Agradecemos o seu tempo. Nenhuma informação foi registrada.'
+                    );
+                    return false;
+                }
+                return true;
+            }
+
+            /* Etapa 2 — Perfil */
+            if (i === 2) {
+                if (!checked('idade')) { faltando.push('idade'); marcarInvalido('idade'); }
+                if (!checked('sexo')) { faltando.push('sexo'); marcarInvalido('sexo'); }
+                if (!checked('periodo')) { faltando.push('periodo'); marcarInvalido('periodo'); }
+                const estado = document.querySelector('input[name="estado"]');
+                if (!estado.value.trim()) { faltando.push('estado'); marcarInvalido('estado'); }
+
+                /* Caso use Seleção
+                if (!checked('tipoIES')) { faltando.push('tipoIES'); marcarInvalido('tipoIES'); }
+                */
+
+                /* Caso use Menu Suspenso */
+                const ies = document.querySelector('input[name="ies"]');
+                if (!ies.value.trim()) { faltando.push('ies'); marcarInvalido('ies'); }
+
+                if (faltando.length) {
+                    mostrarErro('Por favor, responda todas as questões obrigatórias destacadas antes de continuar.');
+                    return false;
+                }
+                return true;
+            }
+
+            /* Etapa 3 — Avaliação */
+            if (i === 3) {
+                const naoRespondidas = MATRIZ_AVALIACAO.filter(m => !checked(m.id));
+                if (naoRespondidas.length) {
+                    document.getElementById('campo-matriz').classList.add('invalido');
+                    mostrarErro('Responda todas as linhas da matriz de avaliação.');
+                    return false;
+                }
+                if (!checked('suficiente')) {
+                    marcarInvalido('suficiente');
+                    mostrarErro('Responda a questão 8 sobre a suficiência da formação.');
+                    return false;
+                }
+                if (!checked('avaliacaoEnsino')) {
+                    marcarInvalido('avaliacaoEnsino');
+                    mostrarErro('Responda a questão 9 sobre a avaliação do ensino recebido.');
+                    return false;
+                }
+                return true;
+            }
+
+            /* Etapa 4 — Importância */
+            if (i === 4) {
+                if (!checked('importancia')) {
+                    marcarInvalido('importancia');
+                    mostrarErro('Selecione uma alternativa para a importância atribuída aos conteúdos.');
+                    return false;
+                }
+                return true;
+            }
+
+            /* Etapa 5 — TCC */
+            if (i === 5) {
+                if (!checked('situacaoTCC')) { marcarInvalido('situacaoTCC'); faltando.push('situacaoTCC'); }
+                if (!checked('pretendeTCC')) { marcarInvalido('pretendeTCC'); faltando.push('pretendeTCC'); }
+                if (!checked('fatorPrincipal')) { marcarInvalido('fatorPrincipal'); faltando.push('fatorPrincipal'); }
+
+                const sel = checked('fatorPrincipal');
+                if (sel && ehOutro(sel.value)) {
+                    const txt = document.querySelector('input[name="fatorPrincipal_outro"]');
+                    if (txt && !txt.value.trim()) {
+                        faltando.push('fatorPrincipal');
+                        txt.style.borderColor = '#fca5a5';
+                    }
+                }
+
+                if (faltando.length) {
+                    mostrarErro('Por favor, responda todas as questões obrigatórias destacadas antes de continuar.');
+                    return false;
+                }
+                return true;
+            }
+
+            /* Etapa 6 — Fatores */
+            if (i === 6) {
+                const marcados = [...document.querySelectorAll('input[name="fatoresTCC"]:checked')];
+                if (marcados.length === 0) {
+                    marcarInvalido('fatoresTCC');
+                    mostrarErro('Selecione pelo menos 1 alternativa para os fatores que influenciam a escolha do tema.');
+                    return false;
+                }
+                if (marcados.length > 3) {
+                    marcarInvalido('fatoresTCC');
+                    mostrarErro(`Você selecionou ${marcados.length} alternativas. O limite é de 3.`);
+                    return false;
+                }
+                if (marcados.some(m => ehOutro(m.value))) {
+                    const txt = document.querySelector('input[name="fatoresTCC_outro"]');
+                    if (!txt.value.trim()) {
+                        marcarInvalido('fatoresTCC');
+                        mostrarErro('Você marcou "Outro fator". Especifique no campo indicado.');
+                        return false;
+                    }
+                }
+
+                if (!checked('motivoNaoTCC')) { marcarInvalido('motivoNaoTCC'); faltando.push('motivoNaoTCC'); }
+                if (!checked('influenciaContato')) { marcarInvalido('influenciaContato'); faltando.push('influenciaContato'); }
+                if (!checked('maisAtividades')) { marcarInvalido('maisAtividades'); faltando.push('maisAtividades'); }
+
+                const motivoSel = checked('motivoNaoTCC');
+                if (motivoSel && ehOutro(motivoSel.value)) {
+                    const txt = document.querySelector('input[name="motivoNaoTCC_outro"]');
+                    if (txt && !txt.value.trim()) {
+                        faltando.push('motivoNaoTCC');
+                        txt.style.borderColor = '#fca5a5';
+                    }
+                }
+
+                if (faltando.length) {
+                    mostrarErro('Por favor, responda todas as questões obrigatórias destacadas antes de continuar.');
+                    return false;
+                }
+                return true;
+            }
+
+            return true;
+        }
+
+        /* ============================================================
+           7. COLETA
+           ============================================================ */
+        function coletarDados() {
+            const fd = new FormData(form);
+            const obj = {};
+            for (const [k, v] of fd.entries()) {
+                if (obj[k] !== undefined) obj[k] = [].concat(obj[k], v);
+                else obj[k] = v;
+            }
+            return obj;
+        }
+
+        function escapeHtml(s) {
+            return String(s).replace(/[&<>"']/g, c => ({
+                '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+            }[c]));
+        }
+
+        function rotulo(name, value) {
+            if (name === 'estado' || name === 'ies') return String(value); /* usar if (name === 'estado' || name === 'ies'), caso use Menu Suspenso */
+            const inp = document.querySelector(`input[name="${name}"][value="${CSS.escape(String(value))}"]`);
+            if (inp && inp.type !== 'hidden') {
+                const span = inp.parentElement.querySelector('span:not(.num)');
+                if (span) return span.textContent.trim();
+            }
+            return String(value);
+        }
+
+        /* ============================================================
+           8. RESUMO
+           ============================================================ */
+        function fmtItem(it, data) {
+            const v = data[it.n];
+            let out;
+
+            if (v === undefined || v === '' || (Array.isArray(v) && v.length === 0)) {
+                out = '<span class="vazio">Não respondido</span>';
+            } else if (Array.isArray(v)) {
+                out = v.map(x => escapeHtml(rotulo(it.n, x))).join('; ');
+            } else {
+                out = escapeHtml(rotulo(it.n, v));
+            }
+
+            if (it.outro && data[it.outro] && String(data[it.outro]).trim()) {
+                out += ` <span class="outro-val">— ${escapeHtml(data[it.outro])}</span>`;
+            }
+            return out;
+        }
+
+        function gerarResumo() {
+            const data = coletarDados();
+            document.getElementById('resumo').innerHTML = RESUMO.map(sec => `
+                <div class="resumo-secao">
+                    <h3>${sec.titulo}</h3>
+                    <dl>
+                        ${sec.itens.map(it => `
+                            <div class="resumo-item">
+                                <dt>${escapeHtml(it.l)}</dt>
+                                <dd>${fmtItem(it, data)}</dd>
+                            </div>`).join('')}
+                    </dl>
+                </div>`).join('');
+        }
+
+        /* ============================================================
+           9. CONDICIONAIS / CONTADOR
+           ============================================================ */
+        function atualizarCondicionais() {
+            document.querySelectorAll('input[type="radio"], input[type="checkbox"]').forEach(inp => {
+                if (ehOutro(inp.value)) {
+                    const wrap = document.getElementById('outro-' + inp.name);
+                    if (wrap) wrap.hidden = !inp.checked;
+                }
+            });
+        }
+
+        function atualizarContador() {
+            const marcados = document.querySelectorAll('input[name="fatoresTCC"]:checked').length;
+            const el = document.getElementById('contadorFatoresTCC');
+            el.textContent = `${marcados}/3`;
+            el.classList.toggle('limite', marcados === 3);
+            el.classList.toggle('excedido', marcados > 3);
+        }
+
+        /* ============================================================
+           10. RASCUNHO
+           ============================================================ */
+        let timerRascunho = null;
+
+        function salvarRascunho() {
+            clearTimeout(timerRascunho);
+            timerRascunho = setTimeout(() => {
+                try { localStorage.setItem(STORAGE_KEY, JSON.stringify(coletarDados())); } catch (e) { }
+            }, 400);
+        }
+
+        function restaurarRascunho() {
+            let raw;
+            try { raw = localStorage.getItem(STORAGE_KEY); } catch (e) { return; }
+            if (!raw) return;
+
+            let data;
+            try { data = JSON.parse(raw); } catch (e) { return; }
+
+            Object.entries(data).forEach(([k, v]) => {
+                const valores = Array.isArray(v) ? v : [v];
+                valores.forEach(val => {
+                    const el = document.querySelector(`input[name="${k}"][value="${CSS.escape(String(val))}"]`);
+                    if (el && (el.type === 'radio' || el.type === 'checkbox')) el.checked = true;
+                });
+
+                const txt = document.querySelector(`input[type="text"][name="${k}"]`);
+                if (txt && typeof v === 'string') txt.value = v;
+
+                const searchHidden = document.querySelector(`.search-select input[type="hidden"][name="${k}"]`);
+                if (searchHidden && typeof v === 'string' && v) {
+                    searchHidden.value = v;
+                    const visivel = searchHidden.parentElement.querySelector('.search-select-input');
+                    if (visivel) visivel.value = v;
+                }
+            });
+
+            atualizarCondicionais();
+            atualizarContador();
+        }
+
+        function limparRascunho() {
+            try { localStorage.removeItem(STORAGE_KEY); } catch (e) { }
+        }
+
+        /* ============================================================
+           11. ENCERRAMENTO / ENVIO
+           ============================================================ */
+        function encerrar(titulo, mensagem) {
+            form.hidden = true;
+            footerNav.hidden = true;
+            document.getElementById('telaEncerramento').hidden = false;
+            document.getElementById('encTitulo').textContent = titulo;
+            document.getElementById('encMensagem').textContent = mensagem;
+            progressFill.style.width = '100%';
+            progressBar.setAttribute('aria-valuenow', 100);
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        async function enviar() {
+            const data = coletarDados();
+            data._meta = {
+                pesquisa: 'A importância da gestão ambiental e sustentabilidade na formação em Engenharia de Produção',
+                pesquisadora: 'Jhulia Emylia Dourado dos Santos',
+                instituicao: 'Universidade Estadual do Maranhão (UEMA)',
+                dataEnvio: new Date().toISOString()
+            };
+
+            const btn = document.getElementById('btnAvancar');
+            btn.disabled = true;
+            btn.textContent = 'Enviando…';
+
+            /* Se a URL ainda não foi configurada, apenas salva localmente */
+            if (!API_URL || API_URL.startsWith('COLE_AQUI')) {
+                console.warn('API_URL não configurada. Respostas salvas apenas localmente.');
+                try {
+                    localStorage.setItem(STORAGE_ENVIO, JSON.stringify(data));
+                    localStorage.removeItem(STORAGE_KEY);
+                } catch (e) { }
+                form.hidden = true;
+                footerNav.hidden = true;
+                document.getElementById('telaFinal').hidden = false;
+                progressFill.style.width = '100%';
+                stepCount.textContent = 'Concluído';
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+                return;
+            }
+
+            try {
+                const resposta = await fetch(API_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+                    body: JSON.stringify(data),
+                    redirect: 'follow'
+                });
+
+                if (!resposta.ok) throw new Error('Servidor respondeu ' + resposta.status);
+
+                try {
+                    localStorage.setItem(STORAGE_ENVIO, JSON.stringify(data));
+                    localStorage.removeItem(STORAGE_KEY);
+                } catch (e) { }
+
+                form.hidden = true;
+                footerNav.hidden = true;
+                document.getElementById('telaFinal').hidden = false;
+                progressFill.style.width = '100%';
+                progressBar.setAttribute('aria-valuenow', 100);
+                stepCount.textContent = 'Concluído';
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+
+            } catch (err) {
+                console.error('Falha no envio:', err);
+                btn.disabled = false;
+                btn.textContent = 'Tentar enviar novamente ✓';
+                mostrarErro('Não foi possível enviar suas respostas. Verifique sua conexão e tente novamente.');
+            }
+        }
+
+        /* ============================================================
+           12. DOWNLOAD / CÓPIA
+           ============================================================ */
+        function obterRespostas() {
+            let raw = null;
+            try { raw = localStorage.getItem(STORAGE_ENVIO); } catch (e) { }
+            if (raw) { try { return JSON.parse(raw); } catch (e) { } }
+            return coletarDados();
+        }
+
+        function baixarJSON() {
+            const data = obterRespostas();
+            const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json;charset=utf-8' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'respostas-pesquisa-gestao-ambiental.json';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            setTimeout(() => URL.revokeObjectURL(url), 1500);
+        }
+
+        async function copiarJSON(botao) {
+            const texto = JSON.stringify(obterRespostas(), null, 2);
+            const original = botao.textContent;
+            try {
+                await navigator.clipboard.writeText(texto);
+                botao.textContent = '✓ Copiado!';
+            } catch (e) {
+                const ta = document.createElement('textarea');
+                ta.value = texto;
+                ta.style.position = 'fixed';
+                ta.style.opacity = '0';
+                document.body.appendChild(ta);
+                ta.select();
+                try { document.execCommand('copy'); botao.textContent = '✓ Copiado!'; }
+                catch (err) { botao.textContent = '✗ Falhou'; }
+                document.body.removeChild(ta);
+            }
+            setTimeout(() => { botao.textContent = original; }, 1800);
+        }
+
+        /* ============================================================
+           13. EVENTOS
+           ============================================================ */
+        btnAvancar.addEventListener('click', () => {
+            if (!validarEtapa(atual)) return;
+            if (atual < TOTAL - 1) irPara(atual + 1);
+            else enviar();
+        });
+
+        btnVoltar.addEventListener('click', () => {
+            if (atual > 0) irPara(atual - 1);
+        });
+
+        stepsNav.addEventListener('click', e => {
+            const btn = e.target.closest('.step-dot');
+            if (!btn) return;
+            const i = Number(btn.dataset.i);
+            if (!visitados.has(i)) return;
+            if (i === atual) return;
+            if (i > atual && !validarEtapa(atual)) return;
+            irPara(i);
+        });
+
+        form.addEventListener('change', e => {
+            atualizarCondicionais();
+            atualizarContador();
+            salvarRascunho();
+            const bloco = e.target.closest && e.target.closest('.questao, .campo');
+            if (bloco) bloco.classList.remove('invalido');
+            if (e.target.type === 'text') e.target.style.borderColor = '';
+        });
+
+        form.addEventListener('input', e => {
+            if (e.target.type === 'text') {
+                salvarRascunho();
+                const bloco = e.target.closest('.campo');
+                if (bloco) bloco.classList.remove('invalido');
+                e.target.style.borderColor = '';
+            }
+        });
+
+        document.getElementById('btnLimparRascunho').addEventListener('click', () => {
+            if (confirm('Deseja apagar o rascunho salvo neste navegador? Esta ação não pode ser desfeita.')) {
+                limparRascunho();
+                location.reload();
+            }
+        });
+
+        document.getElementById('btnBaixarRascunho').addEventListener('click', baixarJSON);
+        document.getElementById('btnCopiarRascunho').addEventListener('click', function () { copiarJSON(this); });
+        document.getElementById('btnBaixar').addEventListener('click', baixarJSON);
+        document.getElementById('btnCopiar').addEventListener('click', function () { copiarJSON(this); });
+        document.getElementById('btnNova').addEventListener('click', () => location.reload());
+        document.getElementById('btnReiniciarEnc').addEventListener('click', () => location.reload());
+
+        document.addEventListener('keydown', e => {
+            if (!e.altKey) return;
+            if (e.key === 'ArrowRight' && !btnAvancar.disabled) btnAvancar.click();
+            if (e.key === 'ArrowLeft' && !btnVoltar.disabled) btnVoltar.click();
+        });
+
+        /* ============================================================
+           14. INICIALIZAÇÃO
+           ============================================================ */
+        restaurarRascunho();
+        atualizarCondicionais();
+        atualizarContador();
+        renderNav();
+        atualizarProgresso();
+        atualizarBotoes();
+    </script>
+</body>
+
+</html>
