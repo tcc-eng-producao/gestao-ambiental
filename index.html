@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <title>Pesquisa — Gestão Ambiental e Sustentabilidade na Engenharia de Produção</title>
     <style>
-         :root {
+        :root {
             --bg: #f4f6fb;
             --card: #ffffff;
             --text: #1f2937;
@@ -21,15 +21,15 @@
             --radius: 14px;
             --shadow: 0 1px 3px rgba(16, 24, 40, .06), 0 1px 2px rgba(16, 24, 40, .04);
         }
-        
+
         * {
             box-sizing: border-box
         }
-        
+
         html {
             scroll-behavior: smooth
         }
-        
+
         body {
             margin: 0;
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
@@ -39,7 +39,15 @@
             -webkit-font-smoothing: antialiased;
             font-size: 16px;
         }
-        
+
+        html,
+        body {
+            overflow-x: hidden;
+            /* Previne scroll horizontal global */
+            width: 100%;
+            max-width: 100vw;
+        }
+
         .topbar {
             position: sticky;
             top: 0;
@@ -49,7 +57,7 @@
             -webkit-backdrop-filter: blur(10px);
             border-bottom: 1px solid var(--border);
         }
-        
+
         .topbar-inner {
             max-width: 900px;
             margin: 0 auto;
@@ -59,14 +67,14 @@
             justify-content: space-between;
             gap: 16px;
         }
-        
+
         .brand {
             display: flex;
             align-items: center;
             gap: 10px;
             min-width: 0
         }
-        
+
         .brand-dot {
             width: 32px;
             height: 32px;
@@ -82,7 +90,7 @@
             color: #ffffff;
             /* cor padrão do ícone (caso não use style inline) */
         }
-        
+
         .brand strong {
             display: block;
             font-size: 14px;
@@ -91,7 +99,7 @@
             overflow: hidden;
             text-overflow: ellipsis
         }
-        
+
         .brand small {
             display: block;
             font-size: 11px;
@@ -100,7 +108,7 @@
             overflow: hidden;
             text-overflow: ellipsis
         }
-        
+
         .step-count {
             font-size: 12px;
             font-weight: 700;
@@ -110,20 +118,20 @@
             border-radius: 999px;
             white-space: nowrap;
         }
-        
+
         .progress {
             height: 5px;
             background: #e8edf5;
             overflow: hidden
         }
-        
+
         .progress-fill {
             height: 100%;
             width: 0;
             background: linear-gradient(90deg, #059669, #10b981);
             transition: width .35s cubic-bezier(.4, 0, .2, 1);
         }
-        
+
         .steps-nav {
             max-width: 900px;
             margin: 0 auto;
@@ -133,11 +141,11 @@
             overflow-x: auto;
             scrollbar-width: none;
         }
-        
+
         .steps-nav::-webkit-scrollbar {
             display: none
         }
-        
+
         .step-dot {
             display: flex;
             align-items: center;
@@ -153,7 +161,7 @@
             white-space: nowrap;
             transition: .15s;
         }
-        
+
         .step-dot span {
             display: inline-flex;
             width: 20px;
@@ -168,36 +176,36 @@
             flex: none;
             transition: .15s;
         }
-        
+
         .step-dot:hover {
             background: #f1f5f9
         }
-        
+
         .step-dot.active {
             color: var(--primary);
             background: var(--primary-light)
         }
-        
+
         .step-dot.active span {
             background: var(--primary);
             color: #fff
         }
-        
+
         .step-dot.done span {
             background: #a7f3d0;
             color: #065f46
         }
-        
+
         .step-dot em {
             font-style: normal
         }
-        
+
         main {
             max-width: 900px;
             margin: 0 auto;
             padding: 24px 20px 130px
         }
-        
+
         .card {
             background: var(--card);
             border: 1px solid var(--border);
@@ -205,27 +213,65 @@
             padding: 28px 30px;
             box-shadow: var(--shadow);
         }
-        
+
         .step {
             display: none
         }
-        
+
         .step.active {
             display: block;
             animation: fade .32s ease
         }
-        
+
+        .paragrafo {
+            text-align: justify;
+        }
+
+        /* ===== LEGENDA DA ESCALA ===== */
+        .legenda-escala {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px 16px;
+            background: #f8fafc;
+            border: 1px solid var(--border);
+            border-left: 3px solid var(--primary);
+            border-radius: 10px;
+            padding: 12px 16px;
+            margin: 14px 0 18px;
+            font-size: 13px;
+            color: #374151;
+            justify-content: space-between;
+            align-content: center;
+            flex-direction: row;
+        }
+
+        .legenda-escala strong {
+            color: var(--primary);
+            font-weight: 700;
+        }
+
+        /* ===== CABEÇALHO DA MATRIZ COM NÚMEROS ===== */
+        .matriz th.th-escala {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--primary-dark);
+            width: 44px;
+            text-align: center;
+            padding: 10px 4px;
+        }
+
         @keyframes fade {
             from {
                 opacity: 0;
                 transform: translateY(10px)
             }
+
             to {
                 opacity: 1;
                 transform: none
             }
         }
-        
+
         .eyebrow {
             display: inline-block;
             font-size: 11px;
@@ -238,44 +284,44 @@
             border-radius: 999px;
             margin-bottom: 12px;
         }
-        
+
         h2 {
             font-size: 23px;
             line-height: 1.25;
             margin: 0 0 10px;
             letter-spacing: -.02em
         }
-        
+
         h3 {
             font-size: 16px;
             margin: 26px 0 8px;
             letter-spacing: -.01em
         }
-        
+
         p {
             margin: 0 0 12px
         }
-        
+
         .lead {
             color: var(--muted);
             font-size: 15px;
             margin-bottom: 18px
         }
-        
+
         .texto-bloco {
             font-size: 15px;
             color: #374151
         }
-        
+
         .texto-bloco ul {
             margin: 8px 0 14px;
             padding-left: 22px
         }
-        
+
         .texto-bloco li {
             margin-bottom: 5px
         }
-        
+
         .info-box {
             background: #f8fafc;
             border: 1px solid var(--border);
@@ -285,26 +331,26 @@
             margin: 18px 0;
             font-size: 14px;
         }
-        
+
         .info-box strong {
             display: block;
             margin-bottom: 6px;
             font-size: 14px
         }
-        
+
         .info-box ul {
             margin: 6px 0 0;
             padding-left: 20px
         }
-        
+
         .info-box li {
             margin-bottom: 3px
         }
-        
+
         .campo {
             margin: 0 0 26px
         }
-        
+
         .campo-label {
             font-weight: 600;
             font-size: 15px;
@@ -313,19 +359,19 @@
             gap: 6px;
             align-items: baseline;
         }
-        
+
         .req {
             color: var(--danger);
             font-weight: 700
         }
-        
+
         .opcoes {
             display: flex;
             flex-direction: column;
             gap: 8px;
             margin-top: 10px
         }
-        
+
         .op {
             display: flex;
             align-items: center;
@@ -338,12 +384,12 @@
             font-size: 15px;
             background: #fff;
         }
-        
+
         .op:hover {
             border-color: #a7f3d0;
             background: #f6fffa
         }
-        
+
         .op input {
             accent-color: var(--primary);
             width: 18px;
@@ -352,16 +398,16 @@
             cursor: pointer;
             margin: 0;
         }
-        
+
         .op:has(input:checked) {
             border-color: var(--primary);
             background: var(--primary-light)
         }
-        
+
         .op span {
             flex: 1
         }
-        
+
         input[type="text"] {
             width: 100%;
             padding: 12px 15px;
@@ -373,27 +419,28 @@
             color: var(--text);
             transition: .15s;
         }
-        
+
         input[type="text"]:focus {
             outline: none;
             border-color: var(--primary);
             box-shadow: 0 0 0 3px rgba(5, 150, 105, .13);
         }
-        
+
         .outro-wrap {
             margin-top: 8px
         }
-        
+
         .outro-wrap[hidden] {
             display: none
         }
+
         /* ===== SEARCH SELECT ===== */
-        
+
         .search-select {
             position: relative;
             margin-top: 10px
         }
-        
+
         .search-select-input {
             width: 100%;
             padding: 12px 42px 12px 15px;
@@ -412,22 +459,22 @@
             white-space: nowrap;
             overflow: hidden;
         }
-        
+
         .search-select-input::placeholder {
             color: #9ca3af
         }
-        
+
         .search-select-input:hover {
             border-color: #a7f3d0
         }
-        
+
         .search-select-input:focus,
         .search-select.open .search-select-input {
             outline: none;
             border-color: var(--primary);
             box-shadow: 0 0 0 3px rgba(5, 150, 105, .13);
         }
-        
+
         .search-select-dropdown {
             position: absolute;
             top: calc(100% + 6px);
@@ -441,11 +488,11 @@
             overflow: hidden;
             animation: fade .18s ease;
         }
-        
+
         .search-select-dropdown[hidden] {
             display: none
         }
-        
+
         .search-select-search {
             width: 100%;
             padding: 12px 16px;
@@ -457,11 +504,11 @@
             background: #f6fffa;
             color: var(--text);
         }
-        
+
         .search-select-search::placeholder {
             color: #9ca3af
         }
-        
+
         .search-select-list {
             list-style: none;
             margin: 0;
@@ -470,16 +517,16 @@
             overflow-y: auto;
             scrollbar-width: thin;
         }
-        
+
         .search-select-list::-webkit-scrollbar {
             width: 8px
         }
-        
+
         .search-select-list::-webkit-scrollbar-thumb {
             background: #cbd5e1;
             border-radius: 4px
         }
-        
+
         .search-select-list li {
             padding: 10px 16px;
             cursor: pointer;
@@ -488,21 +535,21 @@
             transition: background .1s;
             border-left: 3px solid transparent;
         }
-        
+
         .search-select-list li:hover,
         .search-select-list li.highlighted {
             background: var(--primary-light);
             color: var(--primary-dark);
             border-left-color: var(--primary);
         }
-        
+
         .search-select-list li.selected {
             background: var(--primary-light);
             color: var(--primary-dark);
             font-weight: 600;
             border-left-color: var(--primary);
         }
-        
+
         .search-select-list li.empty {
             color: var(--muted);
             cursor: default;
@@ -511,41 +558,76 @@
             padding: 16px;
             border-left-color: transparent;
         }
-        
+
         .search-select-list li.empty:hover {
             background: transparent;
             color: var(--muted);
             border-left-color: transparent;
         }
-        
+
         .campo.invalido .search-select-input {
             border-color: #fca5a5;
             background-color: #fffafa;
         }
+
         /* ===== MATRIZ (grade de avaliação) ===== */
-        
+
         .matriz {
-            overflow-x: auto;
+            /* Remove o overflow-x daqui para não criar barra de rolagem */
             margin-top: 12px;
             border: 1px solid var(--border);
             border-radius: 12px;
+            width: 100%;
+            /* Garante que ocupe 100% do container */
         }
-        
+
         .matriz table {
             width: 100%;
             border-collapse: collapse;
             font-size: 14px;
-            min-width: 640px;
+            /* REMOVIDO o min-width: 640px daqui */
+            table-layout: fixed;
+            /* Importante para que as colunas respeitem o espaço */
         }
-        
+
         .matriz th,
         .matriz td {
             padding: 10px 12px;
             border-bottom: 1px solid #eef2f7;
             text-align: center;
             vertical-align: middle;
+            /* FORÇA A QUEBRA DE LINHA DO TEXTO */
+            word-wrap: break-word;
+            /* Quebra palavras longas */
+            overflow-wrap: break-word;
+            /* Padrão moderno */
+            word-break: break-word;
+            /* Garante que o texto quebre se não couber */
+            hyphens: auto;
+            /* Adiciona hífen se necessário */
+            white-space: normal;
+            /* Permite que o texto quebre em várias linhas */
         }
-        
+
+        /* A primeira coluna (label do aspecto) também precisa quebrar */
+        .matriz td:first-child,
+        .matriz th:first-child {
+            width: 60%;
+            text-align: left;
+            font-weight: 600;
+            color: #374151;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+            word-break: break-word;
+            white-space: normal;
+        }
+
+        .matriz th:not(:first-child),
+        .matriz td:not(:first-child) {
+            width: 8%;
+            text-align: center;
+        }
+
         .matriz th {
             background: #f6fffa;
             color: var(--primary-dark);
@@ -553,23 +635,16 @@
             font-size: 13px;
             line-height: 1.25;
         }
-        
-        .matriz td:first-child,
-        .matriz th:first-child {
-            text-align: left;
-            font-weight: 600;
-            min-width: 180px;
-            color: #374151;
-        }
-        
+
+
         .matriz tbody tr:last-child td {
             border-bottom: 0
         }
-        
+
         .matriz tbody tr:hover td:not(:first-child) {
             background: #fafbff
         }
-        
+
         .matriz .cel {
             position: relative;
             display: inline-flex;
@@ -579,7 +654,7 @@
             height: 26px;
             cursor: pointer;
         }
-        
+
         .matriz .cel input {
             position: absolute;
             opacity: 0;
@@ -588,7 +663,7 @@
             margin: 0;
             cursor: pointer;
         }
-        
+
         .matriz .cel::before {
             content: '';
             width: 18px;
@@ -598,36 +673,37 @@
             transition: .15s;
             background: #fff;
         }
-        
+
         .matriz .cel:has(input:checked)::before {
             border-color: var(--primary);
             background: var(--primary);
             box-shadow: inset 0 0 0 3px #fff;
         }
-        
+
         .matriz .cel:has(input:focus-visible) {
             outline: 2px solid var(--primary);
             outline-offset: 2px;
             border-radius: 4px;
         }
-        
+
         .matriz-aviso {
             margin-top: 10px;
             font-size: 12.5px;
             color: var(--muted);
         }
+
         /* ===== RESTO ===== */
-        
+
         .questao {
             margin: 0 0 30px;
             border-radius: 12px;
             transition: .2s
         }
-        
+
         .questao:last-child {
             margin-bottom: 0
         }
-        
+
         .q-titulo {
             font-weight: 600;
             font-size: 15px;
@@ -635,7 +711,7 @@
             display: flex;
             gap: 8px;
         }
-        
+
         .q-num {
             display: inline-flex;
             align-items: center;
@@ -650,14 +726,14 @@
             flex: none;
             margin-top: 1px;
         }
-        
+
         .q-texto {
             font-size: 14px;
             color: var(--muted);
             margin: 0 0 2px;
             padding-left: 30px;
         }
-        
+
         .contador {
             font-size: 13px;
             font-weight: 700;
@@ -666,17 +742,17 @@
             padding: 4px 11px;
             border-radius: 999px;
         }
-        
+
         .contador.limite {
             color: var(--success);
             background: #ecfdf5
         }
-        
+
         .contador.excedido {
             color: var(--danger);
             background: #fef2f2
         }
-        
+
         .erro-banner {
             background: #fef2f2;
             border: 1px solid #fecaca;
@@ -691,30 +767,30 @@
             gap: 9px;
             align-items: flex-start;
         }
-        
+
         .erro-banner[hidden] {
             display: none
         }
-        
+
         .questao.invalido {
             outline: 2px solid #fecaca;
             outline-offset: 9px
         }
-        
+
         .campo.invalido .opcoes .op {
             border-color: #fecaca
         }
-        
+
         .campo.invalido input[type="text"] {
             border-color: #fca5a5;
             background: #fffafa
         }
-        
+
         .matriz.invalido {
             outline: 2px solid #fecaca;
             outline-offset: 4px
         }
-        
+
         .resumo-secao {
             border: 1px solid var(--border);
             border-radius: 12px;
@@ -722,7 +798,7 @@
             margin-bottom: 14px;
             background: #fcfdff;
         }
-        
+
         .resumo-secao h3 {
             margin: 0 0 12px;
             font-size: 13px;
@@ -731,11 +807,11 @@
             color: var(--primary);
             font-weight: 800;
         }
-        
+
         .resumo-secao dl {
             margin: 0
         }
-        
+
         .resumo-item {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -744,40 +820,40 @@
             border-bottom: 1px dashed #eef2f7;
             font-size: 14px;
         }
-        
+
         .resumo-item:last-child {
             border-bottom: 0;
             padding-bottom: 0
         }
-        
+
         .resumo-item dt {
             color: var(--muted);
             font-weight: 500
         }
-        
+
         .resumo-item dd {
             margin: 0;
             font-weight: 600;
             text-align: right;
             word-break: break-word;
         }
-        
+
         .vazio {
             color: #9ca3af;
             font-weight: 400;
             font-style: italic
         }
-        
+
         .outro-val {
             color: var(--muted);
             font-weight: 400
         }
-        
+
         .final {
             text-align: center;
             padding: 46px 30px
         }
-        
+
         .final-icon {
             width: 74px;
             height: 74px;
@@ -791,35 +867,36 @@
             box-shadow: 0 8px 22px rgba(5, 150, 105, .3);
             animation: pop .45s cubic-bezier(.18, .89, .32, 1.28);
         }
-        
+
         @keyframes pop {
             from {
                 transform: scale(.4);
                 opacity: 0
             }
+
             to {
                 transform: scale(1);
                 opacity: 1
             }
         }
-        
+
         .final h2 {
             margin-bottom: 10px
         }
-        
+
         .final p {
             color: var(--muted);
             max-width: 520px;
             margin: 0 auto 22px
         }
-        
+
         .acoes {
             display: flex;
             flex-wrap: wrap;
             gap: 10px;
             justify-content: center
         }
-        
+
         .btn {
             border: 0;
             border-radius: 10px;
@@ -834,49 +911,49 @@
             gap: 8px;
             justify-content: center;
         }
-        
+
         .btn.primary {
             background: var(--primary);
             color: #fff;
             box-shadow: 0 2px 8px rgba(5, 150, 105, .25);
         }
-        
+
         .btn.primary:hover {
             background: var(--primary-dark);
             transform: translateY(-1px)
         }
-        
+
         .btn.primary:active {
             transform: none
         }
-        
+
         .btn.ghost {
             background: #fff;
             color: var(--text);
             border: 1px solid var(--border)
         }
-        
+
         .btn.ghost:hover {
             background: #f8fafc;
             border-color: #cbd5e1
         }
-        
+
         .btn.small {
             padding: 9px 16px;
             font-size: 13.5px
         }
-        
+
         .btn:disabled {
             opacity: .4;
             cursor: not-allowed;
             transform: none !important
         }
-        
+
         .btn:focus-visible {
             outline: 2px solid var(--primary);
             outline-offset: 2px
         }
-        
+
         .footer-nav {
             position: fixed;
             bottom: 0;
@@ -892,11 +969,11 @@
             justify-content: center;
             padding-bottom: calc(12px + env(safe-area-inset-bottom));
         }
-        
+
         .footer-nav[hidden] {
             display: none
         }
-        
+
         .footer-nav .inner {
             width: 100%;
             max-width: 900px;
@@ -905,46 +982,319 @@
             align-items: center;
             gap: 12px;
         }
-        
+
         .footer-hint {
             font-size: 12.5px;
             color: var(--muted)
         }
-        
-        @media (max-width:640px) {
+
+        @media (max-width: 775px) {
+            .legenda-escala {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 8px 16px;
+                padding: 10px 12px;
+                font-size: 12.5px;
+                margin: 10px 0 14px;
+            }
+
+            /* Os 3 primeiros ficam na primeira linha naturalmente */
+            .legenda-escala span:nth-child(1),
+            .legenda-escala span:nth-child(2),
+            .legenda-escala span:nth-child(3) {
+                flex: 0 1 auto;
+            }
+
+            /* O 4º item é forçado a ir para a segunda linha e a começar do centro */
+            .legenda-escala span:nth-child(4) {
+                margin-left: 0%;
+                /* Empurra o 4º item para a metade da tela */
+                margin-right: 0;
+            }
+
+            /* O 5º item acompanha o 4º, e o conjunto fica centralizado na segunda linha */
+            .legenda-escala span:nth-child(5) {
+                margin-right: 0%;
+                /* Empurra o 5º item para a esquerda, centralizando o par */
+            }
+        }
+
+        @media (max-width: 640px) {
+
+            /* Ajuste global de tamanhos */
             body {
-                font-size: 15px
+                font-size: 14px;
             }
+
             .card {
-                padding: 22px 18px
+                padding: 16px 14px;
             }
+
             h2 {
-                font-size: 20px
+                font-size: 18px;
             }
-            .brand small {
-                display: none
+
+            .lead,
+            .texto-bloco {
+                font-size: 13.5px;
             }
-            .step-dot em {
-                display: none
-            }
-            .step-dot {
-                padding: 4px 6px
-            }
-            .resumo-item {
-                grid-template-columns: 1fr;
-                gap: 2px
-            }
-            .resumo-item dd {
-                text-align: left
-            }
-            .footer-hint {
-                display: none
-            }
+
             main {
-                padding-bottom: 120px
+                padding: 12px 10px 110px;
             }
-            .search-select-list {
-                max-height: 200px
+
+            /* Nav superior mais compacta */
+            .topbar-inner {
+                padding: 10px 14px 6px;
+            }
+
+            .brand strong {
+                font-size: 13px;
+            }
+
+            .step-count {
+                font-size: 11px;
+                padding: 4px 8px;
+            }
+
+            .steps-nav {
+                padding: 6px 14px 8px;
+            }
+
+            .step-dot {
+                font-size: 11px;
+                padding: 3px 5px;
+            }
+
+            .step-dot span {
+                width: 18px;
+                height: 18px;
+                font-size: 10px;
+            }
+
+            /* Formulários e textos */
+            .q-titulo {
+                font-size: 13.5px;
+                gap: 6px;
+            }
+
+            .q-texto {
+                font-size: 12.5px;
+                padding-left: 0;
+            }
+
+            .campo-label {
+                font-size: 13.5px;
+            }
+
+            .op {
+                padding: 8px 12px;
+                font-size: 13.5px;
+                gap: 8px;
+            }
+
+            .op input {
+                width: 16px;
+                height: 16px;
+                margin-top: 1px;
+            }
+
+            .info-box {
+                padding: 12px 14px;
+                font-size: 12.5px;
+            }
+
+            /* Legenda da matriz */
+            .legenda-escala {
+                display: flex;
+                padding: 10px 12px;
+                font-size: 12px;
+                gap: 6px 12px;
+                margin: 10px 0 14px;
+                grid-auto-flow: dense;
+            }
+
+            /* ===== MATRIZ RESPONSIVA SEM SOBREPOSIÇÃO ===== */
+            .matriz {
+                overflow-x: visible;
+                /* Garante que não haja scroll */
+                border-radius: 8px;
+                margin-top: 8px;
+                width: 100%;
+            }
+
+            .matriz table {
+                min-width: 0;
+                /* Remove qualquer restrição de largura mínima */
+                width: 100%;
+                font-size: 12px;
+                table-layout: fixed;
+                /* Faz as colunas dividirem o espaço igualmente */
+            }
+
+            .matriz th,
+            .matriz td {
+                padding: 6px 2px;
+                white-space: normal;
+                /* Permite quebra */
+                word-break: break-word;
+                overflow-wrap: break-word;
+            }
+
+            /* Coluna de texto ocupa 50%, colunas dos círculos dividem os outros 50% */
+            .matriz td:first-child,
+            .matriz th:first-child {
+                width: 60%;
+                /* Força a coluna de texto a ter metade do espaço */
+                font-size: 11.5px;
+                line-height: 1.25;
+                padding-left: 6px;
+                white-space: normal;
+                word-break: break-word;
+                overflow-wrap: break-word;
+            }
+
+            /* Cabeçalhos de 1 a 5 */
+            .matriz th:not(:first-child) {
+                width: 8%;
+                font-size: 11px;
+                font-weight: 700;
+                padding: 6px 1px;
+                white-space: normal;
+            }
+
+            .matriz td:not(:first-child) {
+                padding: 6px 1px;
+            }
+
+            /* Círculos da matriz */
+            .matriz .cel {
+                width: 100%;
+                max-width: 28px;
+                height: 26px;
+                margin: 0 auto;
+            }
+
+            .matriz .cel::before {
+                width: 14px;
+                height: 14px;
+            }
+
+            /* Rodapé e botões */
+            .footer-nav {
+                padding: 8px 12px;
+                padding-bottom: calc(8px + env(safe-area-inset-bottom));
+            }
+
+            .footer-nav .inner {
+                gap: 6px;
+            }
+
+            .btn {
+                padding: 10px 14px;
+                font-size: 13.5px;
+            }
+
+            .btn.small {
+                font-size: 12px;
+                padding: 8px 12px;
+            }
+
+            /* Resumo */
+            .resumo-secao {
+                padding: 12px 14px;
+            }
+
+            .resumo-item {
+                font-size: 13px;
+                gap: 4px;
+            }
+
+            /* Ações empilhadas */
+            .acoes {
+                flex-direction: column;
+                gap: 8px;
+            }
+
+            .acoes .btn {
+                width: 100%;
+            }
+
+            .footer-hint {
+                display: none;
+            }
+        }
+
+        /* Telas muito estreitas (≤ 380px) — ajustes finos para não quebrar */
+        @media (max-width: 380px) {
+            body {
+                font-size: 13px;
+            }
+
+            .card {
+                padding: 14px 10px;
+            }
+
+            h2 {
+                font-size: 16px;
+            }
+
+            .matriz td:first-child,
+            .matriz th:first-child {
+                width: 45%;
+                font-size: 11px;
+            }
+
+            .matriz th:not(:first-child) {
+                font-size: 10px;
+            }
+
+            .matriz .cel {
+                max-width: 24px;
+                height: 24px;
+            }
+
+            .matriz .cel::before {
+                width: 12px;
+                height: 12px;
+            }
+
+            .op {
+                font-size: 13px;
+                padding: 7px 10px;
+            }
+
+            .q-titulo {
+                font-size: 13px;
+            }
+        }
+
+        /* Telas muito estreitas (≤ 380px) — ajustes extras na matriz */
+        @media (max-width: 380px) {
+            .matriz th:not(:first-child) {
+                font-size: 9px;
+                padding: 6px 1px;
+            }
+
+            .matriz td:first-child,
+            .matriz th:first-child {
+                width: 38%;
+                font-size: 11px;
+            }
+
+            .matriz .cel {
+                max-width: 28px;
+                height: 28px;
+            }
+
+            .matriz .cel::before {
+                width: 14px;
+                height: 14px;
+            }
+
+            h2 {
+                font-size: 18px;
             }
         }
     </style>
@@ -963,9 +1313,10 @@
                     <small>Engenharia de Produção — UEMA</small>
                 </div>
             </div>
-            <div class="step-count" id="stepCount">Etapa 1 de 8</div>
+            <div class="step-count" id="stepCount">Etapa 1 de 7</div>
         </div>
-        <div class="progress" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="12" id="progressBar">
+        <div class="progress" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="12"
+            id="progressBar">
             <div class="progress-fill" id="progressFill"></div>
         </div>
         <nav class="steps-nav" id="stepsNav" aria-label="Etapas do formulário"></nav>
@@ -984,16 +1335,23 @@
                     <p class="lead">Trabalho de Conclusão de Curso (TCC) — Universidade Estadual do Maranhão (UEMA)</p>
 
                     <div class="texto-bloco">
-                        <p>Prezado(a) participante,</p>
-                        <p>Este questionário faz parte do Trabalho de Conclusão de Curso (TCC) intitulado <strong>“A
+                        <p class="paragrafo">Prezado(a) participante,</p>
+                        <p class="paragrafo">Este questionário faz parte do Trabalho de Conclusão de Curso (TCC)
+                            intitulado <strong>“A
                                 importância da gestão ambiental e sustentabilidade na formação em Engenharia de
-                                Produção”</strong>, desenvolvido no curso de Engenharia de Produção da Universidade Estadual do Maranhão (UEMA).</p>
-                        <p>A pesquisa tem como objetivo compreender a importância atribuída pelos estudantes de Engenharia de Produção de instituições públicas brasileiras aos conteúdos de gestão ambiental e sustentabilidade, avaliar sua percepção sobre
-                            a abordagem desses conteúdos durante a graduação e identificar os fatores que influenciam a escolha ou a não escolha de temas de TCC relacionados a essa área.</p>
+                                Produção”</strong>, desenvolvido no curso de Engenharia de Produção da Universidade
+                            Estadual do Maranhão (UEMA).</p>
+                        <p class="paragrafo">A pesquisa tem como objetivo compreender a importância atribuída pelos
+                            estudantes de
+                            Engenharia de Produção de instituições públicas brasileiras aos conteúdos de gestão
+                            ambiental e sustentabilidade, avaliar sua percepção sobre
+                            a abordagem desses conteúdos durante a graduação e identificar os fatores que influenciam a
+                            escolha ou a não escolha de temas de TCC relacionados a essa área.</p>
                     </div>
 
                     <h3>Forma de coleta</h3>
-                    <p class="texto-bloco">A participação consiste em responder a um questionário on-line, com perguntas objetivas e alternativas de resposta.</p>
+                    <p class="texto-bloco">A participação consiste em responder a um questionário on-line, com perguntas
+                        objetivas e alternativas de resposta.</p>
                     <ul class="texto-bloco">
                         <li>O tempo estimado de preenchimento é de <strong>5 a 8 minutos</strong>.</li>
                         <li>O formulário <strong>não solicita nome, e-mail ou outros identificadores pessoais</strong>.
@@ -1010,17 +1368,33 @@
                     <h2>Termo de Consentimento Livre e Esclarecido (TCLE)</h2>
 
                     <div class="texto-bloco">
-                        <p>Você está sendo convidado(a) a participar <strong>voluntariamente</strong> desta pesquisa acadêmica.
+                        <p class="paragrafo">Você está sendo convidado(a) a participar <strong>voluntariamente</strong>
+                            desta pesquisa
+                            acadêmica.
                         </p>
-                        <p>Sua participação é voluntária. Você poderá optar por não participar ou interromper o preenchimento antes do envio, sem qualquer penalidade ou prejuízo acadêmico.</p>
-                        <p>Os possíveis riscos são mínimos e podem envolver algum desconforto ao responder perguntas sobre sua formação acadêmica ou suas escolhas relacionadas ao TCC. Não há garantia de benefício individual direto, mas os resultados poderão
-                            contribuir para a compreensão da importância atribuída à gestão ambiental e sustentabilidade nos cursos de Engenharia de Produção.
+                        <p class="paragrafo">Sua participação é voluntária. Você poderá optar por não participar ou
+                            interromper o
+                            preenchimento antes do envio, sem qualquer penalidade ou prejuízo acadêmico.</p>
+                        <p class="paragrafo">Os possíveis riscos são mínimos e podem envolver algum desconforto ao
+                            responder perguntas
+                            sobre sua formação acadêmica ou suas escolhas relacionadas ao TCC. Não há garantia de
+                            benefício individual direto, mas os resultados poderão
+                            contribuir para a compreensão da importância atribuída à gestão ambiental e sustentabilidade
+                            nos cursos de Engenharia de Produção.
                         </p>
-                        <p>As respostas serão utilizadas para <strong>fins acadêmicos e científicos</strong>, conforme as condições de consentimento e os procedimentos de proteção de dados adotados na pesquisa. Os resultados poderão ser apresentados de forma
+                        <p class="paragrafo">As respostas serão utilizadas para <strong>fins acadêmicos e
+                                científicos</strong>, conforme
+                            as condições de consentimento e os procedimentos de proteção de dados adotados na pesquisa.
+                            Os resultados poderão ser apresentados de forma
                             agrupada, sem identificação individual dos participantes.
                         </p>
-                        <p>Para preservar o anonimato, o formulário está configurado para não solicitar nome, e-mail ou outros identificadores pessoais.</p>
-                        <p>Os dados serão armazenados e utilizados conforme o plano de pesquisa e as orientações institucionais aplicáveis. Em caso de dúvidas sobre a pesquisa, você poderá entrar em contato com a pesquisadora responsável pelos meios informados
+                        <p class="paragrafo">Para preservar o anonimato, o formulário está configurado para não
+                            solicitar nome, e-mail ou
+                            outros identificadores pessoais.</p>
+                        <p class="paragrafo">Os dados serão armazenados e utilizados conforme o plano de pesquisa e as
+                            orientações
+                            institucionais aplicáveis. Em caso de dúvidas sobre a pesquisa, você poderá entrar em
+                            contato com a pesquisadora responsável pelos meios informados
                             ao final deste termo.</p>
                     </div>
 
@@ -1058,7 +1432,8 @@
                 <div class="card">
                     <span class="eyebrow">Etapa 3 · Perfil do participante</span>
                     <h2>Perfil do participante</h2>
-                    <p class="lead">Informações para caracterização do grupo participante. Nenhum dado permite identificação individual.</p>
+                    <p class="lead">Informações para caracterização do grupo participante. Nenhum dado permite
+                        identificação individual.</p>
 
                     <div class="campo" id="campo-idade">
                         <p class="campo-label">2. Qual é a sua idade? <span class="req">*</span></p>
@@ -1089,7 +1464,8 @@
                     </div>
 
                     <div class="campo" id="campo-periodo">
-                        <p class="campo-label">4. Em qual período do curso de Engenharia de Produção você está matriculado(a)? <span class="req">*</span></p>
+                        <p class="campo-label">4. Em qual período do curso de Engenharia de Produção você está
+                            matriculado(a)? <span class="req">*</span></p>
                         <div class="opcoes">
                             <label class="op"><input type="radio" name="periodo" value="5º período / semestre"><span>5º
                                     período / semestre</span></label>
@@ -1110,11 +1486,14 @@
                         <p class="campo-label">5. Em qual estado brasileiro está localizada sua instituição de ensino?
                             <span class="req">*</span>
                         </p>
-                        <div class="search-select" id="estado-search-select" data-placeholder="Digite para buscar seu estado...">
-                            <input type="text" class="search-select-input" placeholder="Digite para buscar seu estado..." autocomplete="off" readonly>
+                        <div class="search-select" id="estado-search-select"
+                            data-placeholder="Digite para buscar seu estado...">
+                            <input type="text" class="search-select-input"
+                                placeholder="Digite para buscar seu estado..." autocomplete="off" readonly>
                             <input type="hidden" name="estado" value="">
                             <div class="search-select-dropdown" hidden>
-                                <input type="text" class="search-select-search" placeholder="Buscar estado..." autocomplete="off">
+                                <input type="text" class="search-select-search" placeholder="Buscar estado..."
+                                    autocomplete="off">
                                 <ul class="search-select-list" role="listbox"></ul>
                             </div>
                         </div>
@@ -1136,11 +1515,14 @@
                             <span class="req">*</span>
                         </p>
                         <p class="footer-hint" style="margin:0 0 4px">Digite a sigla ou o nome para buscar.</p>
-                        <div class="search-select" id="ies-search-select" data-placeholder="Digite a sigla ou o nome da IES...">
-                            <input type="text" class="search-select-input" placeholder="Digite a sigla ou o nome da IES..." autocomplete="off" readonly>
+                        <div class="search-select" id="ies-search-select"
+                            data-placeholder="Digite a sigla ou o nome da IES...">
+                            <input type="text" class="search-select-input"
+                                placeholder="Digite a sigla ou o nome da IES..." autocomplete="off" readonly>
                             <input type="hidden" name="ies" value="">
                             <div class="search-select-dropdown" hidden>
-                                <input type="text" class="search-select-search" placeholder="Buscar instituição..." autocomplete="off">
+                                <input type="text" class="search-select-search" placeholder="Buscar instituição..."
+                                    autocomplete="off">
                                 <ul class="search-select-list" role="listbox"></ul>
                             </div>
                         </div>
@@ -1151,24 +1533,34 @@
             <!-- ETAPA 3 — AVALIAÇÃO DO ENSINO -->
             <section class="step" id="step-3" data-title="Avaliação">
                 <div class="card">
-                    <span class="eyebrow">Etapa 4 · Avaliação do ensino</span>
+                    <span class="eyebrow">Etapa 4 · Avaliação do ensino e Importância dos Conteúdos</span>
                     <h2>Gestão ambiental e sustentabilidade na Engenharia de Produção</h2>
                     <p class="lead">Avalie os aspectos abaixo e responda às questões seguintes.</p>
 
                     <div class="questao" id="campo-matriz">
-                        <p class="q-titulo"><span class="q-num">7</span>Com relação à oferta de disciplinas de gestão ambiental e sustentabilidade no curso, como você avalia os seguintes aspectos?</p>
+                        <p class="q-titulo"><span class="q-num">7</span>Com relação à oferta de disciplinas de gestão
+                            ambiental e sustentabilidade no curso, como você avalia os seguintes aspectos? <span class="req">*</span></p>
                         <p class="q-texto">Utilize uma resposta para cada linha.</p>
+
+                        <!-- Legenda da escala (exibição apenas) -->
+                        <div class="legenda-escala">
+                            <span><strong>1</strong> - Muito inadequado</span>
+                            <span><strong>2</strong> - Inadequado</span>
+                            <span><strong>3</strong> - Neutro / Não sei avaliar</span>
+                            <span><strong>4</strong> - Adequado</span>
+                            <span><strong>5</strong> - Muito adequado</span>
+                        </div>
 
                         <div class="matriz" id="matrizAvaliacao">
                             <table>
                                 <thead>
                                     <tr>
                                         <th>Aspecto avaliado</th>
-                                        <th>Muito inadequada</th>
-                                        <th>Inadequada</th>
-                                        <th>Adequada</th>
-                                        <th>Muito adequada</th>
-                                        <th>Não sei avaliar</th>
+                                        <th class="th-escala">1</th>
+                                        <th class="th-escala">2</th>
+                                        <th class="th-escala">3</th>
+                                        <th class="th-escala">4</th>
+                                        <th class="th-escala">5</th>
                                     </tr>
                                 </thead>
                                 <tbody></tbody>
@@ -1178,7 +1570,9 @@
                     </div>
 
                     <div class="questao" id="campo-suficiente">
-                        <p class="q-titulo"><span class="q-num">8</span>Na sua percepção, a formação oferecida pelo curso em gestão ambiental e sustentabilidade é suficiente para preparar você para os desafios dessas áreas no mercado de trabalho?</p>
+                        <p class="q-titulo"><span class="q-num">8</span>Na sua percepção, a formação oferecida pelo
+                            curso em gestão ambiental e sustentabilidade é suficiente para preparar você para os
+                            desafios dessas áreas no mercado de trabalho? <span class="req">*</span></p>
                         <div class="opcoes">
                             <label class="op"><input type="radio" name="suficiente" value="Sim, totalmente"><span>Sim,
                                     totalmente</span></label>
@@ -1192,7 +1586,8 @@
                     </div>
 
                     <div class="questao" id="campo-avaliacaoEnsino">
-                        <p class="q-titulo"><span class="q-num">9</span>Como você avalia o ensino de gestão ambiental e sustentabilidade recebido durante sua graduação?</p>
+                        <p class="q-titulo"><span class="q-num">9</span>Como você avalia o ensino de gestão ambiental e
+                            sustentabilidade recebido durante sua graduação? <span class="req">*</span></p>
                         <div class="opcoes">
                             <label class="op"><input type="radio" name="avaliacaoEnsino"
                                     value="Excelente"><span>Excelente</span></label>
@@ -1209,18 +1604,11 @@
                                     contato com esses conteúdos durante a graduação</span></label>
                         </div>
                     </div>
-                </div>
-            </section>
-
-            <!-- ETAPA 4 — IMPORTÂNCIA ATRIBUÍDA -->
-            <section class="step" id="step-4" data-title="Importância">
-                <div class="card">
-                    <span class="eyebrow">Etapa 5 · Importância atribuída</span>
-                    <h2>Importância dos conteúdos</h2>
-                    <p class="lead">Responda com sinceridade, considerando sua experiência na graduação.</p>
-
+                
                     <div class="questao" id="campo-importancia">
-                        <p class="q-titulo"><span class="q-num">10</span>Qual é a importância que você atribui aos conteúdos de gestão ambiental e sustentabilidade para a formação profissional do engenheiro de produção?</p>
+                        <p class="q-titulo"><span class="q-num">10</span>Qual é a importância que você atribui aos
+                            conteúdos de gestão ambiental e sustentabilidade para a formação profissional do engenheiro
+                            de produção? <span class="req">*</span></p>
                         <div class="opcoes">
                             <label class="op"><input type="radio" name="importancia" value="Nada importante"><span>Nada
                                     importante</span></label>
@@ -1237,15 +1625,16 @@
                 </div>
             </section>
 
-            <!-- ETAPA 5 — SITUAÇÃO DO TCC -->
-            <section class="step" id="step-5" data-title="TCC">
+            <!-- ETAPA 4 — SITUAÇÃO DO TCC -->
+            <section class="step" id="step-4" data-title="TCC">
                 <div class="card">
-                    <span class="eyebrow">Etapa 6 · Escolha do tema de TCC</span>
+                    <span class="eyebrow">Etapa 5 · Escolha do tema de TCC</span>
                     <h2>Situação em relação ao TCC</h2>
                     <p class="lead">Estas perguntas ajudam a entender o processo de escolha do tema de TCC.</p>
 
                     <div class="questao" id="campo-situacaoTCC">
-                        <p class="q-titulo"><span class="q-num">11</span>Em que situação você se encontra em relação ao Trabalho de Conclusão de Curso (TCC)?</p>
+                        <p class="q-titulo"><span class="q-num">11</span>Em que situação você se encontra em relação ao
+                            Trabalho de Conclusão de Curso (TCC)? <span class="req">*</span></p>
                         <div class="opcoes">
                             <label class="op"><input type="radio" name="situacaoTCC" value="Já defini meu tema"><span>Já
                                     defini meu tema</span></label>
@@ -1259,7 +1648,8 @@
                     </div>
 
                     <div class="questao" id="campo-pretendeTCC">
-                        <p class="q-titulo"><span class="q-num">12</span>Você pretende desenvolver seu TCC sobre gestão ambiental ou sustentabilidade?</p>
+                        <p class="q-titulo"><span class="q-num">12</span>Você pretende desenvolver seu TCC sobre gestão
+                            ambiental ou sustentabilidade? <span class="req">*</span></p>
                         <div class="opcoes">
                             <label class="op"><input type="radio" name="pretendeTCC"
                                     value="Sim, meu TCC é dessa área"><span>Sim, meu TCC é dessa área</span></label>
@@ -1274,7 +1664,8 @@
                     </div>
 
                     <div class="questao" id="campo-fatorPrincipal">
-                        <p class="q-titulo"><span class="q-num">13</span>Qual foi (ou qual seria) o principal fator para a escolha do tema do seu TCC?</p>
+                        <p class="q-titulo"><span class="q-num">13</span>Qual foi (ou qual seria) o principal fator para
+                            a escolha do tema do seu TCC? <span class="req">*</span></p>
                         <div class="opcoes">
                             <label class="op"><input type="radio" name="fatorPrincipal"
                                     value="Interesse ou afinidade pessoal com o assunto"><span>Interesse ou afinidade
@@ -1311,9 +1702,9 @@
             </section>
 
             <!-- ETAPA 6 — FATORES E INFLUÊNCIAS -->
-            <section class="step" id="step-6" data-title="Fatores">
+            <section class="step" id="step-5" data-title="Fatores">
                 <div class="card">
-                    <span class="eyebrow">Etapa 7 · Fatores e influências</span>
+                    <span class="eyebrow">Etapa 6 · Fatores e influências</span>
                     <h2>Fatores que influenciam a escolha do tema</h2>
 
                     <div class="campo" id="campo-fatoresTCC">
@@ -1358,7 +1749,9 @@
                     </div>
 
                     <div class="questao" id="campo-motivoNaoTCC">
-                        <p class="q-titulo"><span class="q-num">15</span>Se você não escolheu ou não pretende escolher um tema de TCC relacionado à gestão ambiental ou sustentabilidade, qual é o principal motivo?
+                        <p class="q-titulo"><span class="q-num">15</span>Se você não escolheu ou não pretende escolher
+                            um tema de TCC relacionado à gestão ambiental ou sustentabilidade, qual é o principal
+                            motivo? <span class="req">*</span>
                         </p>
                         <div class="opcoes">
                             <label class="op"><input type="radio" name="motivoNaoTCC"
@@ -1395,7 +1788,9 @@
                     </div>
 
                     <div class="questao" id="campo-influenciaContato">
-                        <p class="q-titulo"><span class="q-num">16</span>O contato com disciplinas, professores, projetos ou atividades de gestão ambiental e/ou sustentabilidade durante a graduação influenciou seu interesse em pesquisar essa área no TCC?</p>
+                        <p class="q-titulo"><span class="q-num">16</span>O contato com disciplinas, professores,
+                            projetos ou atividades de gestão ambiental e/ou sustentabilidade durante a graduação
+                            influenciou seu interesse em pesquisar essa área no TCC? <span class="req">*</span></p>
                         <div class="opcoes">
                             <label class="op"><input type="radio" name="influenciaContato"
                                     value="Aumentou muito meu interesse"><span>Aumentou muito meu
@@ -1415,7 +1810,9 @@
                     </div>
 
                     <div class="questao" id="campo-maisAtividades">
-                        <p class="q-titulo"><span class="q-num">17</span>Se houvesse maior oferta de atividades práticas, projetos de pesquisa e oportunidades de orientação em gestão ambiental e sustentabilidade, você:</p>
+                        <p class="q-titulo"><span class="q-num">17</span>Se houvesse maior oferta de atividades
+                            práticas, projetos de pesquisa e oportunidades de orientação em gestão ambiental e
+                            sustentabilidade, você: <span class="req">*</span></p>
                         <div class="opcoes">
                             <label class="op"><input type="radio" name="maisAtividades"
                                     value="Teria mais interesse em desenvolver meu TCC nessa área"><span>Teria mais
@@ -1436,12 +1833,12 @@
             </section>
 
             <!-- ETAPA 7 — REVISÃO -->
-            <section class="step" id="step-7" data-title="Revisão">
+            <section class="step" id="step-6" data-title="Revisão">
                 <div class="card">
-                    <span class="eyebrow">Etapa 8 · Revisão</span>
+                    <span class="eyebrow">Etapa 7 · Revisão</span>
                     <h2>Revisão das suas respostas</h2>
                     <p class="lead">Confira abaixo o resumo das suas respostas. Se necessário, use o botão
-                        <strong>Voltar</strong> para corrigir alguma informação antes de enviar.
+                        <strong>Voltar</strong> para corrigir alguma informação antes de enviar. <span class="req">*</span>
                     </p>
 
                     <div id="resumo"></div>
@@ -1454,7 +1851,9 @@
                             salvo</button>
                     </div>
 
-                    <p class="footer-hint" style="margin-top:18px">Ao clicar em <strong>Enviar respostas</strong>, você confirma que leu o TCLE e que suas respostas podem ser utilizadas para fins acadêmicos e científicos.
+                    <p class="footer-hint" style="margin-top:18px">Ao clicar em <strong>Enviar respostas</strong>, você
+                        confirma que leu o TCLE e que suas respostas podem ser utilizadas para fins acadêmicos e
+                        científicos.
                     </p>
                 </div>
             </section>
@@ -1473,7 +1872,10 @@
         <div class="card final" id="telaFinal" hidden>
             <div class="final-icon">✓</div>
             <h2>Respostas registradas com sucesso!</h2>
-            <p>Agradecemos sua participação! Suas respostas contribuirão para compreender como os conteúdos de gestão ambiental e sustentabilidade são percebidos pelos estudantes de Engenharia de Produção e quais fatores influenciam suas escolhas acadêmicas.</p>
+            <p class="paragrafo">Agradecemos sua participação! Suas respostas contribuirão para compreender como os
+                conteúdos de gestão
+                ambiental e sustentabilidade são percebidos pelos estudantes de Engenharia de Produção e quais fatores
+                influenciam suas escolhas acadêmicas.</p>
             <div class="acoes">
                 <button type="button" class="btn primary" id="btnBaixar">⬇ Baixar respostas (JSON)</button>
                 <button type="button" class="btn ghost" id="btnCopiar">⧉ Copiar respostas</button>
@@ -1742,27 +2144,27 @@
         }, {
             titulo: 'Perfil do participante',
             itens: [{
-                    n: 'idade',
-                    l: '2. Idade'
-                }, {
-                    n: 'sexo',
-                    l: '3. Sexo'
-                }, {
-                    n: 'periodo',
-                    l: '4. Período do curso'
-                }, {
-                    n: 'estado',
-                    l: '5. Estado da instituição'
-                },
+                n: 'idade',
+                l: '2. Idade'
+            }, {
+                n: 'sexo',
+                l: '3. Sexo'
+            }, {
+                n: 'periodo',
+                l: '4. Período do curso'
+            }, {
+                n: 'estado',
+                l: '5. Estado da instituição'
+            },
 
-                /* Caso use Seleção
-                { n: 'tipoIES', l: '6. Tipo de IES' }
-                */
-                /* Caso use Menu Suspenso */
-                {
-                    n: 'ies',
-                    l: '6. Instituição de Ensino Superior'
-                },
+            /* Caso use Seleção
+            { n: 'tipoIES', l: '6. Tipo de IES' }
+            */
+            /* Caso use Menu Suspenso */
+            {
+                n: 'ies',
+                l: '6. Instituição de Ensino Superior'
+            },
             ]
         }, {
             titulo: 'Avaliação do ensino',
@@ -1819,8 +2221,8 @@
         /* ============================================================
            2. ESTADO
            ============================================================ */
-        const TOTAL = 8;
-        const ROTULOS_ETAPAS = ['Apresentação', 'Consentimento', 'Perfil', 'Avaliação', 'Importância', 'TCC', 'Fatores', 'Revisão'];
+        const TOTAL = 7;
+        const ROTULOS_ETAPAS = ['Apresentação', 'Consentimento', 'Perfil', 'Avaliação', 'TCC', 'Fatores', 'Revisão'];
         const STORAGE_KEY = 'pesquisa_ga_sustentabilidade_rascunho';
         const STORAGE_ENVIO = 'pesquisa_ga_sustentabilidade_resposta';
 
@@ -2102,11 +2504,6 @@
                     mostrarErro('Responda a questão 9 sobre a avaliação do ensino recebido.');
                     return false;
                 }
-                return true;
-            }
-
-            /* Etapa 4 — Importância */
-            if (i === 4) {
                 if (!checked('importancia')) {
                     marcarInvalido('importancia');
                     mostrarErro('Selecione uma alternativa para a importância atribuída aos conteúdos.');
@@ -2115,8 +2512,8 @@
                 return true;
             }
 
-            /* Etapa 5 — TCC */
-            if (i === 5) {
+            /* Etapa 4 — TCC */
+            if (i === 4) {
                 if (!checked('situacaoTCC')) { marcarInvalido('situacaoTCC'); faltando.push('situacaoTCC'); }
                 if (!checked('pretendeTCC')) { marcarInvalido('pretendeTCC'); faltando.push('pretendeTCC'); }
                 if (!checked('fatorPrincipal')) { marcarInvalido('fatorPrincipal'); faltando.push('fatorPrincipal'); }
@@ -2137,8 +2534,8 @@
                 return true;
             }
 
-            /* Etapa 6 — Fatores */
-            if (i === 6) {
+            /* Etapa 5 — Fatores */
+            if (i === 5) {
                 const marcados = [...document.querySelectorAll('input[name="fatoresTCC"]:checked')];
                 if (marcados.length === 0) {
                     marcarInvalido('fatoresTCC');
